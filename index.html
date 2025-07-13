@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrainTracker - PNR Status Checker | Indian Railways</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'railway-blue': '#1e40af',
+                        'railway-orange': '#f97316',
+                        'railway-green': '#059669',
+                        'railway-red': '#dc2626',
+                        'track-gray': '#6b7280',
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(249, 115, 22, 0.05) 0%, transparent 50%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #1e40af, #f97316);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .berth-code {
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-white to-orange-50 min-h-screen">
+    <!-- Enhanced Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-gradient-to-r from-railway-blue to-railway-orange">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo and Brand -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-gradient-to-br from-railway-blue to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-train text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-railway-orange rounded-full animate-pulse"></div>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold gradient-text">TrainTracker</h1>
+                        <p class="text-sm text-gray-600 font-medium">Indian Railways PNR Status</p>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 hover:text-railway-blue font-medium">Home</a>
+                    <a href="#features" class="nav-link text-gray-700 hover:text-railway-blue font-medium">Features</a>
+                    <a href="#services" class="nav-link text-gray-700 hover:text-railway-blue font-medium">Services</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-railway-blue font-medium">Contact</a>
+                </nav>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="#pnr-checker" class="bg-gradient-to-r from-railway-blue to-blue-600 hover:from-blue-600 hover:to-railway-blue text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        Check PNR
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-700 hover:text-railway-blue transition-colors">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section - PNR Checker -->
+    <section id="home" class="hero-pattern py-16 md:py-24 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <!-- Main Heading -->
+                <div class="animate-fade-in">
+                    <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-800 mb-6 leading-tight">
+                        Check Your
+                        <span class="gradient-text block">PNR Status</span>
+                    </h2>
+                    <p class="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+                        Get instant, real-time updates on your train journey with India's most trusted PNR status checker
+                    </p>
+                </div>
+
+                <!-- PNR Input Form -->
+                <div class="animate-slide-up">
+                    <div class="glass-effect rounded-2xl shadow-2xl p-8 md:p-12 mb-12 border border-white/20 max-w-2xl mx-auto">
+                        <form id="pnrForm" class="space-y-8">
+                            <div>
+                                <label for="pnrNumber" class="block text-lg font-semibold text-gray-700 mb-4 text-left">
+                                    <i class="fas fa-ticket-alt mr-3 text-railway-blue"></i>
+                                    Enter Your 10-Digit PNR Number
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        type="text" 
+                                        id="pnrNumber" 
+                                        name="pnrNumber"
+                                        placeholder="e.g., 2335631036"
+                                        class="w-full px-6 py-5 text-xl border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-railway-blue/20 focus:border-railway-blue outline-none transition-all duration-300 bg-white/90 text-center font-mono tracking-wider"
+                                        maxlength="10"
+                                        pattern="[0-9]{10}"
+                                        required
+                                    >
+                                    <div class="absolute right-5 top-5 text-gray-400">
+                                        <i class="fas fa-search text-xl"></i>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-3 flex items-center justify-center">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    Your PNR number is printed on your train ticket
+                                </p>
+                            </div>
+
+                            <button 
+                                type="submit" 
+                                class="w-full bg-gradient-to-r from-railway-blue to-blue-600 hover:from-blue-600 hover:to-railway-blue text-white font-bold py-5 px-8 rounded-xl text-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl flex items-center justify-center space-x-3"
+                            >
+                                <i class="fas fa-search text-xl"></i>
+                                <span>Get PNR Status</span>
+                                <i class="fas fa-arrow-right text-xl"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 animate-slide-up">
+                    <div class="glass-effect rounded-xl p-6 border border-white/20 shadow-lg feature-card">
+                        <div class="text-3xl font-bold text-railway-blue mb-2">10M+</div>
+                        <div class="text-sm text-gray-600">PNR Checks</div>
+                    </div>
+                    <div class="glass-effect rounded-xl p-6 border border-white/20 shadow-lg feature-card">
+                        <div class="text-3xl font-bold text-railway-orange mb-2">99.9%</div>
+                        <div class="text-sm text-gray-600">Accuracy</div>
+                    </div>
+                    <div class="glass-effect rounded-xl p-6 border border-white/20 shadow-lg feature-card">
+                        <div class="text-3xl font-bold text-railway-green mb-2">24/7</div>
+                        <div class="text-sm text-gray-600">Available</div>
+                    </div>
+                    <div class="glass-effect rounded-xl p-6 border border-white/20 shadow-lg feature-card">
+                        <div class="text-3xl font-bold text-railway-red mb-2">Instant</div>
+                        <div class="text-sm text-gray-600">Results</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 text-6xl text-blue-200 opacity-20 animate-float hidden lg:block">
+            <i class="fas fa-train"></i>
+        </div>
+        <div class="absolute bottom-20 right-10 text-4xl text-orange-200 opacity-20 animate-float hidden lg:block" style="animation-delay: 1s;">
+            <i class="fas fa-ticket-alt"></i>
+        </div>
+    </section>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="hidden py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <div class="inline-block relative mb-8">
+                <div class="animate-spin rounded-full h-20 w-20 border-4 border-railway-blue border-t-transparent"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-train text-railway-blue text-2xl"></i>
+                </div>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Fetching Your PNR Status</h3>
+            <p class="text-gray-600 mb-2">Please wait while we connect to Indian Railways database</p>
+            <div class="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                <div class="w-2 h-2 bg-railway-blue rounded-full animate-pulse"></div>
+                <div class="w-2 h-2 bg-railway-blue rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
+                <div class="w-2 h-2 bg-railway-blue rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div id="errorMessage" class="hidden py-16 bg-red-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-white border-2 border-red-200 rounded-xl p-8 shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-red-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-red-800 font-bold text-xl">Unable to Fetch PNR Status</h3>
+                            <p class="text-red-700 mt-1" id="errorText"></p>
+                        </div>
+                    </div>
+                    <button onclick="hideAllSections(); document.getElementById('pnrNumber').focus();" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PNR Status Result -->
+    <div id="pnrResult" class="hidden py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <!-- Success Header -->
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-green-500 rounded-full mb-4">
+                        <i class="fas fa-check text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-2">PNR Status Found!</h3>
+                    <p class="text-gray-600">Here are your complete journey details</p>
+                </div>
+
+                <div class="glass-effect rounded-2xl shadow-2xl overflow-hidden border border-white/20">
+                    <!-- Train Information Header -->
+                    <div class="bg-gradient-to-r from-railway-blue via-blue-600 to-railway-blue text-white p-8">
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div>
+                                <h4 class="text-2xl font-bold mb-2" id="trainName"></h4>
+                                <p class="text-blue-200 text-lg" id="trainNumber"></p>
+                                <p class="text-blue-200 text-sm mt-2" id="trainStatus"></p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-blue-200 mb-1">PNR Number</p>
+                                <p class="text-2xl font-bold font-mono" id="displayPnr"></p>
+                                <p class="text-sm text-blue-200 mt-2" id="chartStatus"></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-blue-200 mb-1">Passengers</p>
+                                <p class="text-2xl font-bold" id="passengerCount"></p>
+                                <p class="text-sm text-blue-200 mt-2" id="journeyClass"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Journey Details -->
+                    <div class="p-8">
+                        <!-- Route Information -->
+                        <div class="grid md:grid-cols-2 gap-8 mb-8">
+                            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
+                                <h5 class="font-bold text-gray-800 mb-4 flex items-center text-lg">
+                                    <div class="bg-green-500 rounded-full p-2 mr-3">
+                                        <i class="fas fa-play text-white"></i>
+                                    </div>
+                                    Departure
+                                </h5>
+                                <p class="text-xl font-bold text-gray-800 mb-2" id="sourceStation"></p>
+                                <p class="text-gray-600 flex items-center mb-2">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span id="departureDateTime"></span>
+                                </p>
+                                <p class="text-sm text-gray-500">
+                                    Boarding: <span id="boardingPoint" class="font-medium"></span>
+                                </p>
+                            </div>
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 border border-red-200">
+                                <h5 class="font-bold text-gray-800 mb-4 flex items-center text-lg">
+                                    <div class="bg-red-500 rounded-full p-2 mr-3">
+                                        <i class="fas fa-stop text-white"></i>
+                                    </div>
+                                    Arrival
+                                </h5>
+                                <p class="text-xl font-bold text-gray-800 mb-2" id="destinationStation"></p>
+                                <p class="text-gray-600 flex items-center mb-2">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span id="arrivalDateTime"></span>
+                                </p>
+                                <p class="text-sm text-gray-500">
+                                    Distance: <span id="distance" class="font-medium"></span> km
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Booking Information -->
+                        <div class="grid md:grid-cols-4 gap-6 mb-8">
+                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 text-center border border-purple-200">
+                                <div class="bg-purple-500 rounded-full p-3 w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                                    <i class="fas fa-calendar-alt text-white text-xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">Booking Date</p>
+                                <p class="font-bold text-sm" id="bookingDate"></p>
+                            </div>
+                            <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-6 text-center border border-yellow-200">
+                                <div class="bg-yellow-500 rounded-full p-3 w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                                    <i class="fas fa-rupee-sign text-white text-xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">Total Fare</p>
+                                <p class="font-bold text-lg" id="totalFare"></p>
+                            </div>
+                            <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-6 text-center border border-indigo-200">
+                                <div class="bg-indigo-500 rounded-full p-3 w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                                    <i class="fas fa-ticket-alt text-white text-xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">Quota</p>
+                                <p class="font-bold text-lg" id="quota"></p>
+                            </div>
+                            <div class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-6 text-center border border-teal-200">
+                                <div class="bg-teal-500 rounded-full p-3 w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                                    <i class="fas fa-exchange-alt text-white text-xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">Vikalp</p>
+                                <p class="font-bold text-lg" id="vikalpStatus"></p>
+                            </div>
+                        </div>
+
+                        <!-- Passenger Details -->
+                        <div class="mb-8">
+                            <h5 class="font-bold text-gray-800 mb-6 flex items-center text-xl">
+                                <div class="bg-railway-orange rounded-full p-2 mr-3">
+                                    <i class="fas fa-users text-white"></i>
+                                </div>
+                                Passenger Details
+                            </h5>
+                            <div class="overflow-x-auto">
+                                <table class="w-full border-collapse bg-white rounded-xl overflow-hidden shadow-lg">
+                                    <thead class="bg-gradient-to-r from-gray-100 to-gray-200">
+                                        <tr>
+                                            <th class="border border-gray-200 px-4 py-4 text-left font-bold">S.No</th>
+                                            <th class="border border-gray-200 px-4 py-4 text-left font-bold">Booking Status</th>
+                                            <th class="border border-gray-200 px-4 py-4 text-left font-bold">Current Status</th>
+                                            <th class="border border-gray-200 px-4 py-4 text-left font-bold">Coach</th>
+                                            <th class="border border-gray-200 px-4 py-4 text-left font-bold">Berth</th>
+                                            <th class="border border-gray-200 px-4 py-4 text-left font-bold">Berth Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="passengerTable">
+                                        <!-- Passenger rows will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button onclick="window.print()" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-print mr-2"></i>
+                                Print Details
+                            </button>
+                            <button onclick="hideAllSections(); document.getElementById('pnrNumber').value = ''; document.getElementById('pnrNumber').focus();" class="bg-gradient-to-r from-railway-blue to-blue-600 hover:from-blue-600 hover:to-railway-blue text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-search mr-2"></i>
+                                Check Another PNR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Why Choose TrainTracker?</h3>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Experience the most comprehensive and reliable train tracking service in India
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center feature-card bg-white rounded-xl p-8 shadow-lg border border-gray-100">
+                    <div class="bg-gradient-to-br from-blue-500 to-railway-blue w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-bolt text-white text-3xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-gray-800 mb-4">Lightning Fast</h4>
+                    <p class="text-gray-600 leading-relaxed">
+                        Get instant PNR status updates in seconds. Our optimized system ensures you never wait.
+                    </p>
+                </div>
+                
+                <div class="text-center feature-card bg-white rounded-xl p-8 shadow-lg border border-gray-100">
+                    <div class="bg-gradient-to-br from-orange-500 to-railway-orange w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shield-alt text-white text-3xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-gray-800 mb-4">100% Secure</h4>
+                    <p class="text-gray-600 leading-relaxed">
+                        Your data is protected with enterprise-grade security. We never store your personal information.
+                    </p>
+                </div>
+                
+                <div class="text-center feature-card bg-white rounded-xl p-8 shadow-lg border border-gray-100">
+                    <div class="bg-gradient-to-br from-green-500 to-railway-green w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-mobile-alt text-white text-3xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-gray-800 mb-4">Mobile Friendly</h4>
+                    <p class="text-gray-600 leading-relaxed">
+                        Access from anywhere, anytime. Our responsive design works perfectly on all devices.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Our Services</h3>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Comprehensive railway information services at your fingertips
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-100 feature-card">
+                    <div class="bg-gradient-to-br from-blue-500 to-railway-blue rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-3">PNR Status</h4>
+                    <p class="text-gray-600">Real-time passenger name record status checking</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-100 feature-card">
+                    <div class="bg-gradient-to-br from-orange-500 to-railway-orange rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-clock text-white text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-3">Live Status</h4>
+                    <p class="text-gray-600">Track train running status and delays</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-100 feature-card">
+                    <div class="bg-gradient-to-br from-green-500 to-railway-green rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-chair text-white text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-3">Seat Availability</h4>
+                    <p class="text-gray-600">Check available seats for your journey</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-100 feature-card">
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-rupee-sign text-white text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-3">Fare Enquiry</h4>
+                    <p class="text-gray-600">Get fare information between stations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800 text-white">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-railway-blue to-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-train text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">TrainTracker</h3>
+                            <p class="text-gray-400 text-sm">Indian Railways</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">
+                        Your trusted companion for railway journey tracking and real-time status updates across India.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#home" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>PNR Status</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Train Schedule</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Seat Availability</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Fare Enquiry</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Support</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right mr-2 text-xs"></i>Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Contact Info</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-railway-blue"></i>
+                            139 (Railway Enquiry)
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-railway-blue"></i>
+                            support@traintracker.in
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-globe mr-3 text-railway-blue"></i>
+                            www.indianrailways.gov.in
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 mb-4 md:mb-0">
+                        &copy; 2024 TrainTracker. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API Configuration
+        const API_CONFIG = {
+            url: 'https://irctc-indian-railway-pnr-status.p.rapidapi.com/getPNRStatus/',
+            headers: {
+                'X-RapidAPI-Key': '47aac8b746msh5c680def67275dfp1c2f42jsn019db75d486b', // Replace with your actual RapidAPI key
+                'X-RapidAPI-Host': 'irctc-indian-railway-pnr-status.p.rapidapi.com'
+            }
+        };
+
+        // Mock data using the real API structure for demonstration
+        const mockPNRData = {
+            '1234567890': {
+                success: true,
+                data: {
+                    pnrNumber: "1234567890",
+                    dateOfJourney: "Jan 15, 2024 4:55:00 PM",
+                    trainNumber: "12345",
+                    trainName: "Rajdhani Express",
+                    sourceStation: "NDLS",
+                    destinationStation: "BCT",
+                    reservationUpto: "BCT",
+                    boardingPoint: "NDLS",
+                    journeyClass: "AC2",
+                    numberOfpassenger: 2,
+                    chartStatus: "Chart Prepared",
+                    informationMessage: [""],
+                    passengerList: [
+                        {
+                            passengerSerialNumber: 1,
+                            bookingStatusDetails: "CNF/B2/45",
+                            currentStatusDetails: "CNF/B2/45/LB",
+                            currentCoachId: "B2",
+                            currentBerthNo: 45,
+                            currentBerthCode: "LB"
+                        },
+                        {
+                            passengerSerialNumber: 2,
+                            bookingStatusDetails: "CNF/B2/46",
+                            currentStatusDetails: "CNF/B2/46/UB",
+                            currentCoachId: "B2",
+                            currentBerthNo: 46,
+                            currentBerthCode: "UB"
+                        }
+                    ],
+                    timeStamp: "Jan 15, 2024 2:00:52 PM",
+                    trainCancelStatus: "Train is running on time",
+                    bookingFare: 3500,
+                    ticketFare: 3500,
+                    quota: "GN",
+                    reasonType: "S",
+                    ticketTypeInPrs: "S",
+                    vikalpStatus: "No",
+                    waitListType: 0,
+                    bookingDate: "Dec 23, 2023 9:36:59 AM",
+                    arrivalDate: "Jan 16, 2024 8:35:00 AM",
+                    distance: 1384,
+                    isWL: "N"
+                }
+            }
+        };
+
+        // DOM elements
+        const pnrForm = document.getElementById('pnrForm');
+        const pnrInput = document.getElementById('pnrNumber');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const pnrResult = document.getElementById('pnrResult');
+
+        // Form submission handler
+        pnrForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const pnrNumber = pnrInput.value.trim();
+            
+            // Validate PNR number
+            if (!validatePNR(pnrNumber)) {
+                showError('Please enter a valid 10-digit PNR number');
+                return;
+            }
+
+            // Show loading state
+            showLoading();
+            
+            try {
+                // Try to fetch from real API first
+                const pnrData = await fetchPNRStatus(pnrNumber);
+                displayPNRResult(pnrNumber, pnrData);
+            } catch (error) {
+                console.error('API Error:', error);
+                
+                // Fallback to mock data for demonstration
+                const mockData = mockPNRData[pnrNumber];
+                if (mockData && mockData.success) {
+                    displayPNRResult(pnrNumber, mockData.data);
+                } else {
+                    showError('PNR not found or API service unavailable. Please check your PNR number and try again.');
+                }
+            }
+        });
+
+        // Fetch PNR status from API
+        async function fetchPNRStatus(pnrNumber) {
+            const response = await fetch(`${API_CONFIG.url}${pnrNumber}`, {
+                method: 'GET',
+                headers: API_CONFIG.headers
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error(data.message || 'Failed to fetch PNR status');
+            }
+
+            return data.data;
+        }
+
+        // PNR validation
+        function validatePNR(pnr) {
+            return /^\d{10}$/.test(pnr);
+        }
+
+        // Show loading state
+        function showLoading() {
+            hideAllSections();
+            loadingSpinner.classList.remove('hidden');
+            
+            // Scroll to loading section
+            loadingSpinner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Show error message
+        function showError(message) {
+            hideAllSections();
+            errorText.textContent = message;
+            errorMessage.classList.remove('hidden');
+            
+            // Scroll to error section
+            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Display PNR result
+        function displayPNRResult(pnrNumber, data) {
+            hideAllSections();
+            
+            // Populate train information
+            document.getElementById('trainName').textContent = data.trainName;
+            document.getElementById('trainNumber').textContent = `Train No: ${data.trainNumber}`;
+            document.getElementById('trainStatus').textContent = data.trainCancelStatus || 'Status not available';
+            document.getElementById('displayPnr').textContent = pnrNumber;
+            document.getElementById('chartStatus').textContent = data.chartStatus;
+            document.getElementById('passengerCount').textContent = data.numberOfpassenger;
+            document.getElementById('journeyClass').textContent = data.journeyClass;
+            
+            // Populate journey details
+            document.getElementById('sourceStation').textContent = getStationName(data.sourceStation);
+            document.getElementById('destinationStation').textContent = getStationName(data.destinationStation);
+            document.getElementById('boardingPoint').textContent = getStationName(data.boardingPoint);
+            document.getElementById('departureDateTime').textContent = formatDateTime(data.dateOfJourney);
+            document.getElementById('arrivalDateTime').textContent = formatDateTime(data.arrivalDate);
+            document.getElementById('distance').textContent = data.distance || 'N/A';
+            
+            // Populate booking information
+            document.getElementById('bookingDate').textContent = formatDateTime(data.bookingDate);
+            document.getElementById('totalFare').textContent = `₹${data.ticketFare || data.bookingFare}`;
+            document.getElementById('quota').textContent = data.quota;
+            document.getElementById('vikalpStatus').textContent = data.vikalpStatus;
+            
+            // Populate passenger table
+            const passengerTable = document.getElementById('passengerTable');
+            passengerTable.innerHTML = '';
+            
+            data.passengerList.forEach((passenger) => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 transition-colors';
+                row.innerHTML = `
+                    <td class="border border-gray-200 px-4 py-4 font-medium text-center">${passenger.passengerSerialNumber}</td>
+                    <td class="border border-gray-200 px-4 py-4">
+                        <span class="px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(passenger.bookingStatusDetails)}">
+                            ${passenger.bookingStatusDetails}
+                        </span>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-4">
+                        <span class="px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(passenger.currentStatusDetails)}">
+                            ${passenger.currentStatusDetails}
+                        </span>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-4 text-center font-bold">
+                        ${passenger.currentCoachId || 'N/A'}
+                    </td>
+                    <td class="border border-gray-200 px-4 py-4 text-center font-bold">
+                        ${passenger.currentBerthNo || 'N/A'}
+                    </td>
+                    <td class="border border-gray-200 px-4 py-4 text-center">
+                        <span class="berth-code bg-blue-100 text-blue-800">
+                            ${getBerthTypeName(passenger.currentBerthCode)}
+                        </span>
+                    </td>
+                `;
+                passengerTable.appendChild(row);
+            });
+            
+            pnrResult.classList.remove('hidden');
+            
+            // Scroll to result with smooth animation
+            setTimeout(() => {
+                pnrResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        // Helper function to get station name
+        function getStationName(stationCode) {
+            const stationNames = {
+                'HW': 'Haridwar (HW)',
+                'GKP': 'Gorakhpur (GKP)',
+                'NDLS': 'New Delhi (NDLS)',
+                'BCT': 'Mumbai Central (BCT)'
+            };
+            return stationNames[stationCode] || stationCode;
+        }
+
+        // Helper function to format date and time
+        function formatDateTime(dateString) {
+            if (!dateString) return 'Not available';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleString('en-IN', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch (error) {
+                return dateString;
+            }
+        }
+
+        // Helper function to get berth type name
+        function getBerthTypeName(berthCode) {
+            const berthTypes = {
+                'LB': 'Lower Berth',
+                'MB': 'Middle Berth',
+                'UB': 'Upper Berth',
+                'SL': 'Side Lower',
+                'SU': 'Side Upper'
+            };
+            return berthTypes[berthCode] || berthCode || 'N/A';
+        }
+
+        // Get status color based on booking status
+        function getStatusColor(status) {
+            if (status && status.includes('CNF')) {
+                return 'bg-green-100 text-green-800 border border-green-200';
+            } else if (status && status.includes('WL')) {
+                return 'bg-yellow-100 text-yellow-800 border border-yellow-200';
+            } else if (status && status.includes('RAC')) {
+                return 'bg-orange-100 text-orange-800 border border-orange-200';
+            } else {
+                return 'bg-gray-100 text-gray-800 border border-gray-200';
+            }
+        }
+
+        // Hide all result sections
+        function hideAllSections() {
+            loadingSpinner.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            pnrResult.classList.add('hidden');
+        }
+
+        // Input formatting - only allow numbers
+        pnrInput.addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-based animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.feature-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
