@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RailTracker - Live PNR Status & Train Tracking | Indian Railways</title>
+    <meta name="description" content="Check live PNR status, train tracking, and Indian Railways information instantly. Get real-time updates for your train journey with RailTracker.">
+    
+    <!-- Google AdSense Auto Ads Script Placeholder -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_PUBLISHER_ID" crossorigin="anonymous"></script> -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -88,7 +93,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
-            font-family: 'Inter', system-ui, sans-serif;
+            font-family: 'Inter', system-ui', sans-serif;
         }
         
         .hero-gradient {
@@ -227,11 +232,6 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
-        @media print {
-            .no-print { display: none !important; }
-            .print-only { display: block !important; }
-        }
-
         .live-indicator {
             animation: pulse 2s infinite;
         }
@@ -239,27 +239,189 @@
         .delay-badge {
             animation: bounceGentle 3s infinite;
         }
+
+        /* Print-specific styles */
+        @media print {
+            /* Hide elements not meant for printing */
+            body.print-pnr-mode header,
+            body.print-pnr-mode #home,
+            body.print-pnr-mode #loadingSpinner,
+            body.print-pnr-mode #errorMessage,
+            body.print-pnr-mode #features,
+            body.print-pnr-mode #services,
+            body.print-pnr-mode footer,
+            body.print-pnr-mode .no-print {
+                display: none !important;
+            }
+
+            /* Ensure only the PNR result section is visible and styled for print */
+            body.print-pnr-mode {
+                background: white !important; /* Solid white background for print */
+                min-height: auto !important;
+                font-family: 'Inter', sans-serif !important; /* Consistent font */
+                color: black !important; /* Ensure text is black for readability */
+                margin: 0;
+                padding: 0;
+            }
+
+            body.print-pnr-mode #pnrResult {
+                display: block !important;
+                position: static !important; /* Remove absolute positioning */
+                width: 100% !important;
+                max-width: 800px !important; /* Constrain width for better readability on A4 */
+                margin: 0 auto !important; /* Center the content */
+                padding: 1rem !important; /* Add some padding around the content */
+                box-shadow: none !important; /* Remove shadows for print */
+                border: none !important; /* Remove borders for print */
+                background: white !important; /* Ensure white background */
+            }
+
+            body.print-pnr-mode #pnrResult .container {
+                max-width: none !important; /* Allow full width within the #pnrResult max-width */
+                padding: 0 !important; /* Remove container padding to let #pnrResult control it */
+            }
+
+            /* Adjust internal elements for print */
+            body.print-pnr-mode #pnrResult h3,
+            body.print-pnr-mode #pnrResult h4,
+            body.print-pnr-mode #pnrResult h5,
+            body.print-pnr-mode #pnrResult h6 {
+                color: #333 !important; /* Darker text for headings */
+                margin-bottom: 0.5rem !important;
+            }
+
+            body.print-pnr-mode #pnrResult p,
+            body.print-pnr-mode #pnrResult span,
+            body.print-pnr-mode #pnrResult li {
+                color: #555 !important; /* Darker text for body content */
+                font-size: 0.9em !important; /* Slightly smaller font for print */
+                line-height: 1.4 !important;
+            }
+
+            body.print-pnr-mode #pnrResult .hero-gradient {
+                background: #0f172a !important; /* Solid background for print header */
+                color: white !important;
+                box-shadow: none !important;
+            }
+
+            body.print-pnr-mode #pnrResult .glass-effect,
+            body.print-pnr-mode #pnrResult .glass-dark {
+                background: white !important; /* Solid white background for cards */
+                border: 1px solid #eee !important; /* Light border for separation */
+                box-shadow: none !important; /* Remove shadows */
+            }
+
+            body.print-pnr-mode #pnrResult .feature-card {
+                transform: none !important; /* Remove hover transforms */
+                box-shadow: none !important;
+            }
+
+            body.print-pnr-mode #pnrResult table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                margin-top: 1rem !important;
+            }
+
+            body.print-pnr-mode #pnrResult th,
+            body.print-pnr-mode #pnrResult td {
+                border: 1px solid #ddd !important; /* Add borders to table cells */
+                padding: 0.5rem !important;
+                text-align: left !important;
+                color: #333 !important;
+                font-size: 0.85em !important;
+            }
+
+            body.print-pnr-mode #pnrResult thead {
+                background: #f0f0f0 !important; /* Light background for table header */
+            }
+
+            body.print-pnr-mode #pnrResult tbody tr {
+                background: white !important; /* Ensure white background for rows */
+            }
+
+            body.print-pnr-mode #pnrResult .bg-green-50,
+            body.print-pnr-mode #pnrResult .bg-yellow-50 {
+                background: white !important; /* Remove colored backgrounds for print rows */
+            }
+
+            body.print-pnr-mode #pnrResult .px-4.py-2.rounded-2xl {
+                padding: 0.25rem 0.5rem !important; /* Smaller padding for status badges */
+                border-radius: 0.25rem !important;
+                box-shadow: none !important;
+                font-size: 0.75em !important;
+            }
+
+            body.print-pnr-mode #pnrResult .bg-gradient-to-r {
+                background: none !important; /* Remove gradients for print */
+            }
+
+            body.print-pnr-mode #pnrResult .text-white {
+                color: black !important; /* Ensure white text becomes black for print */
+            }
+
+            /* Ensure icons are visible and not too large */
+            body.print-pnr-mode #pnrResult .fas {
+                color: #666 !important; /* Neutral color for icons */
+            }
+
+            /* Page breaks for better multi-page printing */
+            body.print-pnr-mode #pnrResult > div {
+                page-break-inside: avoid;
+            }
+            body.print-pnr-mode #pnrResult table {
+                page-break-inside: auto;
+            }
+            body.print-pnr-mode #pnrResult table tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+        }
     </style>
+    <!-- JSON-LD Schema Markup for WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "RailTracker",
+      "url": "https://www.railtracker.in",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.railtracker.in/?pnr={pnr_number}",
+        "query-input": "required name=pnr_number"
+      }
+    }
+    </script>
 </head>
 <body class="bg-gradient-to-br from-slate-50 via-blue-50 to-orange-50 min-h-screen font-display">
+    <!-- Google AdSense Display Ad Unit Placeholder (e.g., just below the header) -->
+    <!-- <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-YOUR_ADSENSE_PUBLISHER_ID"
+         data-ad-slot="YOUR_AD_SLOT_ID"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script> -->
+
     <!-- Enhanced Premium Header -->
     <header class="glass-effect sticky top-0 z-50 border-b border-white/20 shadow-xl">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between h-20">
                 <!-- Premium Logo and Brand -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2 sm:space-x-4">
                     <div class="relative group">
-                        <div class="w-16 h-16 hero-gradient rounded-2xl flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition-all duration-300">
-                            <i class="fas fa-train text-white text-2xl animate-train-move"></i>
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 hero-gradient rounded-2xl flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition-all duration-300">
+                            <i class="fas fa-train text-white text-xl sm:text-2xl animate-train-move"></i>
                         </div>
-                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center live-indicator">
+                        <div class="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center live-indicator">
                             <i class="fas fa-circle text-white text-xs"></i>
                         </div>
                     </div>
                     <div>
-                        <h1 class="text-3xl font-black gradient-text tracking-tight">RailTracker</h1>
-                        <p class="text-sm text-slate-600 font-semibold flex items-center">
-                            <i class="fas fa-shield-check text-green-500 mr-2"></i>
+                        <h1 class="text-2xl sm:text-3xl font-black gradient-text tracking-tight">RailTracker</h1>
+                        <p class="text-xs sm:text-sm text-slate-600 font-semibold flex items-center">
+                            <i class="fas fa-shield-check text-green-500 mr-1 sm:mr-2"></i>
                             Live PNR & Train Status
                         </p>
                     </div>
@@ -282,766 +444,701 @@
                 </nav>
 
                 <!-- Premium CTA -->
-                <div class="hidden md:flex items-center space-x-6">
+                <div class="hidden md:flex items-center space-x-4 lg:space-x-6">
                     <div class="text-right">
                         <p class="text-xs text-slate-500 font-medium">Quick Access</p>
                         <p class="text-sm font-bold text-slate-700">Check PNR Status</p>
                     </div>
-                    <a href="#pnr-checker" class="btn-primary text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-glow hover:shadow-glow-orange transition-all duration-300 flex items-center">
-                        <i class="fas fa-search mr-3"></i>
+                    <a href="#pnr-checker" class="btn-primary text-white px-6 py-3 lg:px-8 lg:py-4 rounded-2xl font-bold text-base lg:text-lg shadow-glow hover:shadow-glow-orange transition-all duration-300 flex items-center">
+                        <i class="fas fa-search mr-2 lg:mr-3"></i>
                         Check Now
                     </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobileMenuBtn" class="lg:hidden text-slate-700 hover:text-rail-blue transition-colors p-3 rounded-xl hover:bg-white/50">
-                    <i class="fas fa-bars text-2xl"></i>
+                <button id="mobileMenuBtn" class="lg:hidden text-slate-700 hover:text-rail-blue transition-colors p-2 rounded-xl hover:bg-white/50">
+                    <i class="fas fa-bars text-xl sm:text-2xl"></i>
                 </button>
             </div>
         </div>
 
         <!-- Enhanced Mobile Menu -->
-        <div id="mobileMenu" class="mobile-menu fixed top-20 left-0 w-full h-screen glass-dark lg:hidden z-40">
-            <nav class="p-8 space-y-8">
-                <a href="#home" class="block text-white hover:text-blue-300 font-bold text-xl flex items-center group">
-                    <i class="fas fa-home mr-4 group-hover:scale-110 transition-transform"></i>Home
+        <div id="mobileMenu" class="mobile-menu fixed top-20 left-0 w-full h-[calc(100vh-5rem)] glass-dark lg:hidden z-40 overflow-y-auto">
+            <nav class="p-6 sm:p-8 space-y-6 sm:space-y-8">
+                <a href="#home" class="block text-white hover:text-blue-300 font-bold text-lg sm:text-xl flex items-center group">
+                    <i class="fas fa-home mr-3 sm:mr-4 group-hover:scale-110 transition-transform"></i>Home
                 </a>
-                <a href="#features" class="block text-white hover:text-blue-300 font-bold text-xl flex items-center group">
-                    <i class="fas fa-star mr-4 group-hover:scale-110 transition-transform"></i>Features
+                <a href="#features" class="block text-white hover:text-blue-300 font-bold text-lg sm:text-xl flex items-center group">
+                    <i class="fas fa-star mr-3 sm:mr-4 group-hover:scale-110 transition-transform"></i>Features
                 </a>
-                <a href="#services" class="block text-white hover:text-blue-300 font-bold text-xl flex items-center group">
-                    <i class="fas fa-cogs mr-4 group-hover:scale-110 transition-transform"></i>Services
+                <a href="#services" class="block text-white hover:text-blue-300 font-bold text-lg sm:text-xl flex items-center group">
+                    <i class="fas fa-cogs mr-3 sm:mr-4 group-hover:scale-110 transition-transform"></i>Services
                 </a>
-                <a href="#contact" class="block text-white hover:text-blue-300 font-bold text-xl flex items-center group">
-                    <i class="fas fa-headset mr-4 group-hover:scale-110 transition-transform"></i>Support
+                <a href="#contact" class="block text-white hover:text-blue-300 font-bold text-lg sm:text-xl flex items-center group">
+                    <i class="fas fa-headset mr-3 sm:mr-4 group-hover:scale-110 transition-transform"></i>Support
                 </a>
                 <div class="pt-6 border-t border-white/20">
-                    <a href="#pnr-checker" class="btn-primary text-white px-8 py-4 rounded-2xl font-bold text-lg inline-flex items-center">
-                        <i class="fas fa-search mr-3"></i>Check PNR Status
+                    <a href="#pnr-checker" class="btn-primary text-white px-6 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-base sm:text-lg inline-flex items-center">
+                        <i class="fas fa-search mr-2 sm:mr-3"></i>Check PNR Status
                     </a>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- Premium Hero Section -->
-    <section id="home" class="relative py-24 md:py-32 overflow-hidden">
-        <!-- Enhanced Background -->
-        <div class="absolute inset-0">
-            <div class="hero-gradient opacity-20 absolute inset-0" style="background: url(images/background.jpg); background-repeat: no-repeat; background-size: contain;"></div>
-            <div class="absolute top-20 left-10 text-9xl text-blue-200 opacity-5 animate-float hidden xl:block">
-                <i class="fas fa-train"></i>
-            </div>
-            <div class="absolute bottom-20 right-10 text-7xl text-orange-200 opacity-5 animate-float hidden xl:block" style="animation-delay: 2s;">
-                <i class="fas fa-route"></i>
-            </div>
-            <div class="absolute top-1/2 left-1/4 text-6xl text-green-200 opacity-5 animate-float hidden xl:block" style="animation-delay: 4s;">
-                <i class="fas fa-map-marker-alt"></i>
-            </div>
-        </div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-6xl mx-auto text-center">
-                <!-- Premium Badge -->
-                <div class="animate-fade-in mb-12">
-                    <div class="inline-flex items-center glass-effect rounded-full px-8 py-4 mb-8 shadow-xl">
-                        <div class="w-3 h-3 bg-green-500 rounded-full mr-3 live-indicator"></div>
-                        <span class="text-sm font-bold text-slate-700 mr-3">LIVE TRACKING</span>
-                        <div class="w-px h-6 bg-slate-300 mx-3"></div>
-                        <i class="fas fa-users text-blue-500 mr-2"></i>
-                        <span class="text-sm font-bold text-slate-700 mr-3">50M+ Users</span>
-                        <div class="w-px h-6 bg-slate-300 mx-3"></div>
-                        <i class="fas fa-star text-yellow-500 mr-2"></i>
-                        <span class="text-sm font-bold text-slate-700">4.9 Rating</span>
-                    </div>
-                    
-                    <h2 class="text-6xl md:text-8xl lg:text-9xl font-black text-slate-800 mb-8 leading-none tracking-tight">
-                        Check Your
-                        <span class="gradient-text block relative">
-                            PNR Status
-                            <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-40 h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 rounded-full opacity-60"></div>
-                        </span>
-                    </h2>
-                    
-                    <p class="text-xl md:text-2xl text-slate-600 mb-16 max-w-4xl mx-auto leading-relaxed font-medium">
-                        Experience India's most advanced train tracking platform with 
-                        <span class="font-bold text-rail-blue">real-time updates</span>, 
-                        <span class="font-bold text-rail-orange">live station tracking</span>, 
-                        and <span class="font-bold text-rail-green">instant notifications</span>
-                    </p>
+    <main>
+        <!-- Premium Hero Section -->
+        <section id="home" class="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+            <!-- Enhanced Background -->
+            <div class="absolute inset-0">
+                <div class="hero-gradient opacity-20 absolute inset-0" style="background: url(/images/background.jpg); background-repeat: no-repeat; background-size: cover; background-position: center;"></div>
+                <img src="/images/background.jpg" alt="Abstract train tracks with a gradient overlay" class="absolute inset-0 w-full h-full object-cover opacity-20" />
+                <div class="absolute top-10 left-5 text-6xl text-blue-200 opacity-5 animate-float hidden md:block xl:text-9xl xl:top-20 xl:left-10">
+                    <i class="fas fa-train"></i>
                 </div>
-
-                <!-- Premium PNR Input Form -->
-                <div class="animate-slide-up mb-20">
-                    <div class="glass-effect rounded-3xl shadow-2xl p-10 md:p-16 max-w-4xl mx-auto border-2 border-white/30">
-                        <div class="flex items-center justify-center mb-10">
-                            <div class="hero-gradient p-6 rounded-2xl shadow-xl">
-                                <i class="fas fa-ticket-alt text-white text-3xl"></i>
-                            </div>
+                <div class="absolute bottom-10 right-5 text-4xl text-orange-200 opacity-5 animate-float hidden md:block xl:text-7xl xl:bottom-20 xl:right-10" style="animation-delay: 2s;">
+                    <i class="fas fa-route"></i>
+                </div>
+                <div class="absolute top-1/3 left-1/4 text-3xl text-green-200 opacity-5 animate-float hidden md:block xl:text-6xl xl:top-1/2 xl:left-1/4" style="animation-delay: 4s;">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+            </div>
+            
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-6xl mx-auto text-center">
+                    <!-- Premium Badge -->
+                    <div class="animate-fade-in mb-8 md:mb-12">
+                        <div class="inline-flex flex-wrap items-center justify-center glass-effect rounded-full px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 mb-6 sm:mb-8 shadow-xl gap-2 sm:gap-3">
+                            <div class="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full mr-1 sm:mr-2 live-indicator"></div>
+                            <span class="text-xs sm:text-sm font-bold text-slate-700">LIVE TRACKING</span>
+                            <div class="w-px h-4 sm:h-6 bg-slate-300 mx-1 sm:mx-2"></div>
+                            <i class="fas fa-users text-blue-500 mr-1 sm:mr-2"></i>
+                            <span class="text-xs sm:text-sm font-bold text-slate-700">50M+ Users</span>
+                            <div class="w-px h-4 sm:h-6 bg-slate-300 mx-1 sm:mx-2"></div>
+                            <i class="fas fa-star text-yellow-500 mr-1 sm:mr-2"></i>
+                            <span class="text-xs sm:text-sm font-bold text-slate-700">4.9 Rating</span>
                         </div>
                         
-                        <form id="pnrForm" class="space-y-10">
-                            <div>
-                                <label for="pnrNumber" class="block text-2xl font-black text-slate-800 mb-8 text-center">
-                                    Enter Your 10-Digit PNR Number
-                                </label>
-                                <div class="relative">
-                                    <input 
-                                        type="text" 
-                                        id="pnrNumber" 
-                                        name="pnrNumber"
-                                        placeholder="e.g., 2335631036"
-                                        class="w-full px-10 py-8 text-3xl border-3 border-slate-200 rounded-2xl focus:ring-6 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 bg-white/90 text-center font-mono tracking-widest shadow-inner input-glow"
-                                        maxlength="10"
-                                        pattern="[0-9]{10}"
-                                        required
-                                    >
-                                    <div class="absolute right-8 top-8 text-slate-400">
-                                        <i class="fas fa-search text-3xl"></i>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-center mt-6 space-x-8 text-sm text-slate-500">
-                                    <div class="flex items-center glass-effect px-4 py-2 rounded-full">
-                                        <i class="fas fa-shield-check text-green-500 mr-2"></i>
-                                        <span class="font-semibold">100% Secure</span>
-                                    </div>
-                                    <div class="flex items-center glass-effect px-4 py-2 rounded-full">
-                                        <i class="fas fa-bolt text-blue-500 mr-2"></i>
-                                        <span class="font-semibold">Instant Results</span>
-                                    </div>
-                                    <div class="flex items-center glass-effect px-4 py-2 rounded-full">
-                                        <i class="fas fa-broadcast-tower text-purple-500 mr-2"></i>
-                                        <span class="font-semibold">Live Tracking</span>
-                                    </div>
+                        <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-800 mb-6 sm:mb-8 leading-tight tracking-tight">
+                            Check Your
+                            <span class="gradient-text block relative">
+                                PNR Status
+                                <div class="absolute -bottom-4 sm:-bottom-6 left-1/2 transform -translate-x-1/2 w-24 sm:w-32 md:w-40 h-1 sm:h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 rounded-full opacity-60"></div>
+                            </span>
+                        </h2>
+                        
+                        <p class="text-base sm:text-lg md:text-xl text-slate-600 mb-10 sm:mb-12 md:mb-16 max-w-4xl mx-auto leading-relaxed font-medium">
+                            Experience India's most advanced train tracking platform with 
+                            <span class="font-bold text-rail-blue">real-time updates</span>, 
+                            <span class="font-bold text-rail-orange">live station tracking</span>, 
+                            and <span class="font-bold text-rail-green">instant notifications</span>
+                        </p>
+                    </div>
+
+                    <!-- Premium PNR Input Form -->
+                    <div class="animate-slide-up mb-16 md:mb-20">
+                        <div class="glass-effect rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-10 md:p-16 max-w-4xl mx-auto border-2 border-white/30">
+                            <div class="flex items-center justify-center mb-8 sm:mb-10">
+                                <div class="hero-gradient p-4 sm:p-6 rounded-2xl shadow-xl">
+                                    <i class="fas fa-ticket-alt text-white text-2xl sm:text-3xl"></i>
                                 </div>
                             </div>
+                            
+                            <form id="pnrForm" class="space-y-6 sm:space-y-8 md:space-y-10">
+                                <div>
+                                    <label for="pnrNumber" class="block text-xl sm:text-2xl font-black text-slate-800 mb-6 sm:mb-8 text-center">
+                                        Enter Your 10-Digit PNR Number
+                                    </label>
+                                    <div class="relative">
+                                        <input 
+                                            type="text" 
+                                            id="pnrNumber" 
+                                            name="pnrNumber"
+                                            placeholder="e.g., 2335631036"
+                                            class="w-full px-6 py-4 sm:px-8 sm:py-6 text-xl sm:text-2xl md:text-3xl border-3 border-slate-200 rounded-2xl focus:ring-6 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all duration-300 bg-white/90 text-center font-mono tracking-widest shadow-inner input-glow"
+                                            maxlength="10"
+                                            pattern="[0-9]{10}"
+                                            required
+                                        >
+                                        <div class="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 text-slate-400">
+                                            <i class="fas fa-search text-xl sm:text-2xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-wrap items-center justify-center mt-4 sm:mt-6 gap-3 sm:gap-4 text-xs sm:text-sm text-slate-500">
+                                        <div class="flex items-center glass-effect px-3 py-1 sm:px-4 sm:py-2 rounded-full">
+                                            <i class="fas fa-shield-check text-green-500 mr-1 sm:mr-2"></i>
+                                            <span class="font-semibold">100% Secure</span>
+                                        </div>
+                                        <div class="flex items-center glass-effect px-3 py-1 sm:px-4 sm:py-2 rounded-full">
+                                            <i class="fas fa-bolt text-blue-500 mr-1 sm:mr-2"></i>
+                                            <span class="font-semibold">Instant Results</span>
+                                        </div>
+                                        <div class="flex items-center glass-effect px-3 py-1 sm:px-4 sm:py-2 rounded-full">
+                                            <i class="fas fa-broadcast-tower text-purple-500 mr-1 sm:mr-2"></i>
+                                            <span class="font-semibold">Live Tracking</span>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <button 
-                                type="submit" 
-                                class="w-full btn-primary text-white font-black py-8 px-12 rounded-2xl text-2xl shadow-2xl hover:shadow-glow-orange transition-all duration-300 flex items-center justify-center space-x-4 relative overflow-hidden group"
-                            >
-                                <i class="fas fa-search text-2xl group-hover:scale-110 transition-transform"></i>
-                                <span>Get Live PNR Status</span>
-                                <i class="fas fa-arrow-right text-2xl group-hover:translate-x-2 transition-transform"></i>
-                            </button>
-                        </form>
+                                <button 
+                                    type="submit" 
+                                    class="w-full btn-primary text-white font-black py-6 sm:py-7 md:py-8 px-8 sm:px-10 rounded-2xl text-xl sm:text-2xl shadow-2xl hover:shadow-glow-orange transition-all duration-300 flex items-center justify-center space-x-3 sm:space-x-4 relative overflow-hidden group"
+                                >
+                                    <i class="fas fa-search text-xl sm:text-2xl group-hover:scale-110 transition-transform"></i>
+                                    <span>Get Live PNR Status</span>
+                                    <i class="fas fa-arrow-right text-xl sm:text-2xl group-hover:translate-x-2 transition-transform"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Premium Stats -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 animate-slide-up">
-                    <div class="glass-effect rounded-2xl p-8 border border-white/20 shadow-xl feature-card">
-                        <div class="text-4xl font-black text-rail-blue mb-3 flex items-center justify-center">
-                            <i class="fas fa-users mr-3 text-3xl"></i>
-                            50M+
+                    <!-- Premium Stats -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 animate-slide-up">
+                        <div class="glass-effect rounded-2xl p-6 sm:p-8 border border-white/20 shadow-xl feature-card">
+                            <div class="text-3xl sm:text-4xl font-black text-rail-blue mb-2 sm:mb-3 flex items-center justify-center">
+                                <i class="fas fa-users mr-2 sm:mr-3 text-2xl sm:text-3xl"></i>
+                                50M+
+                            </div>
+                            <div class="text-xs sm:text-sm text-slate-600 font-bold">Trusted Users</div>
                         </div>
-                        <div class="text-sm text-slate-600 font-bold">Trusted Users</div>
-                    </div>
-                    <div class="glass-effect rounded-2xl p-8 border border-white/20 shadow-xl feature-card">
-                        <div class="text-4xl font-black text-rail-orange mb-3 flex items-center justify-center">
-                            <i class="fas fa-chart-line mr-3 text-3xl"></i>
-                            99.9%
+                        <div class="glass-effect rounded-2xl p-6 sm:p-8 border border-white/20 shadow-xl feature-card">
+                            <div class="text-3xl sm:text-4xl font-black text-rail-orange mb-2 sm:mb-3 flex items-center justify-center">
+                                <i class="fas fa-chart-line mr-2 sm:mr-3 text-2xl sm:text-3xl"></i>
+                                99.9%
+                            </div>
+                            <div class="text-xs sm:text-sm text-slate-600 font-bold">Accuracy Rate</div>
                         </div>
-                        <div class="text-sm text-slate-600 font-bold">Accuracy Rate</div>
-                    </div>
-                    <div class="glass-effect rounded-2xl p-8 border border-white/20 shadow-xl feature-card">
-                        <div class="text-4xl font-black text-rail-green mb-3 flex items-center justify-center">
-                            <i class="fas fa-clock mr-3 text-3xl"></i>
-                            24/7
+                        <div class="glass-effect rounded-2xl p-6 sm:p-8 border border-white/20 shadow-xl feature-card">
+                            <div class="text-3xl sm:text-4xl font-black text-rail-green mb-2 sm:mb-3 flex items-center justify-center">
+                                <i class="fas fa-clock mr-2 sm:mr-3 text-2xl sm:text-3xl"></i>
+                                24/7
+                            </div>
+                            <div class="text-xs sm:text-sm text-slate-600 font-bold">Live Support</div>
                         </div>
-                        <div class="text-sm text-slate-600 font-bold">Live Support</div>
-                    </div>
-                    <div class="glass-effect rounded-2xl p-8 border border-white/20 shadow-xl feature-card">
-                        <div class="text-4xl font-black text-rail-red mb-3 flex items-center justify-center">
-                            <i class="fas fa-bolt mr-3 text-3xl"></i>
-                            &lt;1s
+                        <div class="glass-effect rounded-2xl p-6 sm:p-8 border border-white/20 shadow-xl feature-card">
+                            <div class="text-3xl sm:text-4xl font-black text-rail-red mb-2 sm:mb-3 flex items-center justify-center">
+                                <i class="fas fa-bolt mr-2 sm:mr-3 text-2xl sm:text-3xl"></i>
+                                &lt;1s
+                            </div>
+                            <div class="text-xs sm:text-sm text-slate-600 font-bold">Response Time</div>
                         </div>
-                        <div class="text-sm text-slate-600 font-bold">Response Time</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Enhanced Loading Spinner -->
-    <div id="loadingSpinner" class="hidden py-24 bg-gradient-to-br from-blue-50 to-purple-50">
-        <div class="container mx-auto px-4 text-center">
-            <div class="max-w-lg mx-auto">
-                <div class="relative mb-12">
-                    <div class="w-32 h-32 hero-gradient rounded-full flex items-center justify-center mx-auto animate-spin shadow-2xl">
-                        <div class="w-28 h-28 bg-white rounded-full flex items-center justify-center">
-                            <i class="fas fa-train text-rail-blue text-4xl animate-train-move"></i>
+        <!-- Enhanced Loading Spinner -->
+        <div id="loadingSpinner" class="hidden py-16 sm:py-20 md:py-24 bg-gradient-to-br from-blue-50 to-purple-50">
+            <div class="container mx-auto px-4 text-center">
+                <div class="max-w-lg mx-auto">
+                    <div class="relative mb-8 sm:mb-10 md:mb-12">
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 hero-gradient rounded-full flex items-center justify-center mx-auto animate-spin shadow-2xl">
+                            <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-white rounded-full flex items-center justify-center">
+                                <i class="fas fa-train text-rail-blue text-3xl sm:text-4xl animate-train-move"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="absolute inset-0 rounded-full border-4 border-dashed border-blue-500/30 animate-spin" style="animation-direction: reverse; animation-duration: 4s;"></div>
-                </div>
-                
-                <h3 class="text-4xl font-black text-slate-800 mb-6">Fetching Your PNR Status</h3>
-                <p class="text-xl text-slate-600 mb-8 font-medium">Connecting to Indian Railways live database...</p>
-                
-                <div class="flex items-center justify-center space-x-3 mb-8">
-                    <div class="w-4 h-4 bg-rail-blue rounded-full animate-bounce"></div>
-                    <div class="w-4 h-4 bg-rail-orange rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
-                    <div class="w-4 h-4 bg-rail-green rounded-full animate-bounce" style="animation-delay: 0.4s;"></div>
-                </div>
-                
-                <div class="glass-effect rounded-2xl p-6 text-slate-600 max-w-md mx-auto">
-                    <div class="flex items-center justify-center space-x-6">
-                        <div class="flex items-center">
-                            <i class="fas fa-check text-green-500 mr-2"></i>
-                            <span class="font-semibold">Secure Connection</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-database text-blue-500 mr-2"></i>
-                            <span class="font-semibold">Live Data</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Enhanced Error Message -->
-    <div id="errorMessage" class="hidden py-24 bg-gradient-to-br from-red-50 to-pink-50">
-        <div class="container mx-auto px-4">
-            <div class="max-w-2xl mx-auto">
-                <div class="glass-effect border-2 border-red-200 rounded-3xl p-12 shadow-2xl">
-                    <div class="text-center mb-10">
-                        <div class="w-24 h-24 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
-                            <i class="fas fa-exclamation-triangle text-white text-4xl"></i>
-                        </div>
-                        <h3 class="text-3xl font-black text-red-800 mb-6">Unable to Fetch PNR Status</h3>
-                        <p class="text-red-700 text-xl mb-8 font-medium" id="errorText"></p>
+                        <div class="absolute inset-0 rounded-full border-4 border-dashed border-blue-500/30 animate-spin" style="animation-direction: reverse; animation-duration: 4s;"></div>
                     </div>
                     
-                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                        <button onclick="hideAllSections(); document.getElementById('pnrNumber').focus();" class="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl">
-                            <i class="fas fa-redo mr-3"></i>
-                            Try Again
-                        </button>
-                        <button onclick="window.location.href='#contact'" class="bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl">
-                            <i class="fas fa-headset mr-3"></i>
-                            Get Help
-                        </button>
+                    <h3 class="text-3xl sm:text-4xl font-black text-slate-800 mb-4 sm:mb-6">Fetching Your PNR Status</h3>
+                    <p class="text-lg sm:text-xl text-slate-600 mb-6 sm:mb-8 font-medium">Connecting to Indian Railways live database...</p>
+                    
+                    <div class="flex items-center justify-center space-x-2 sm:space-x-3 mb-6 sm:mb-8">
+                        <div class="w-3 h-3 sm:w-4 sm:h-4 bg-rail-blue rounded-full animate-bounce"></div>
+                        <div class="w-3 h-3 sm:w-4 sm:h-4 bg-rail-orange rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                        <div class="w-3 h-3 sm:w-4 sm:h-4 bg-rail-green rounded-full animate-bounce" style="animation-delay: 0.4s;"></div>
+                    </div>
+                    
+                    <div class="glass-effect rounded-2xl p-4 sm:p-6 text-slate-600 max-w-md mx-auto">
+                        <div class="flex flex-wrap items-center justify-center gap-4 text-sm sm:text-base">
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span class="font-semibold">Secure Connection</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-database text-blue-500 mr-2"></i>
+                                <span class="font-semibold">Live Data</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Enhanced PNR Status Result -->
-    <div id="pnrResult" class="hidden py-24 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div class="container mx-auto px-4">
-            <div class="max-w-7xl mx-auto">
-                <!-- Success Header -->
-                <div class="text-center mb-16 animate-fade-in">
-                    <div class="inline-flex items-center justify-center w-24 h-24 hero-gradient rounded-full mb-8 shadow-2xl">
-                        <i class="fas fa-check text-white text-4xl"></i>
+        <!-- Enhanced Error Message -->
+        <div id="errorMessage" class="hidden py-16 sm:py-20 md:py-24 bg-gradient-to-br from-red-50 to-pink-50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-2xl mx-auto">
+                    <div class="glass-effect border-2 border-red-200 rounded-2xl sm:rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl">
+                        <div class="text-center mb-8 sm:mb-10">
+                            <div class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-xl">
+                                <i class="fas fa-exclamation-triangle text-white text-3xl sm:text-4xl"></i>
+                            </div>
+                            <h3 class="text-2xl sm:text-3xl font-black text-red-800 mb-4 sm:mb-6">Unable to Fetch PNR Status</h3>
+                            <p class="text-red-700 text-lg sm:text-xl mb-6 sm:mb-8 font-medium" id="errorText"></p>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
+                            <button onclick="hideAllSections(); document.getElementById('pnrNumber').focus();" class="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl">
+                                <i class="fas fa-redo mr-2 sm:mr-3"></i>
+                                Try Again
+                            </button>
+                            <button onclick="window.location.href='#contact'" class="bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl">
+                                <i class="fas fa-headset mr-2 sm:mr-3"></i>
+                                Get Help
+                            </button>
+                        </div>
                     </div>
-                    <h3 class="text-5xl font-black text-slate-800 mb-6">PNR Status Found!</h3>
-                    <p class="text-2xl text-slate-600 font-medium">Here are your complete journey details with live tracking</p>
                 </div>
+            </div>
+        </div>
 
-                <!-- Main Result Container -->
-                <div class="glass-effect rounded-3xl shadow-2xl overflow-hidden border border-white/30">
-                    <!-- Enhanced Train Header -->
-                    <div class="hero-gradient text-white p-12 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-black/20"></div>
-                        <div class="relative z-10">
-                            <div class="grid lg:grid-cols-4 gap-8">
-                                <div class="lg:col-span-2">
-                                    <div class="flex items-center mb-6">
-                                        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mr-6 shadow-xl">
-                                            <i class="fas fa-train text-white text-2xl"></i>
+        <!-- Enhanced PNR Status Result -->
+        <div id="pnrResult" class="hidden py-16 sm:py-20 md:py-24 bg-gradient-to-br from-slate-50 to-blue-50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Success Header -->
+                    <div class="text-center mb-12 sm:mb-16 animate-fade-in">
+                        <div class="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 hero-gradient rounded-full mb-6 sm:mb-8 shadow-2xl">
+                            <i class="fas fa-check text-white text-3xl sm:text-4xl"></i>
+                        </div>
+                        <h3 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-800 mb-4 sm:mb-6">PNR Status Found!</h3>
+                        <p class="text-lg sm:text-xl md:text-2xl text-slate-600 font-medium">Here are your complete journey details with live tracking</p>
+                    </div>
+
+                    <!-- Main Result Container -->
+                    <div class="glass-effect rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-white/30">
+                        <!-- Enhanced Train Header -->
+                        <div class="hero-gradient text-white p-8 sm:p-10 md:p-12 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="relative z-10">
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                                    <div class="md:col-span-2">
+                                        <div class="flex items-center mb-4 sm:mb-6">
+                                            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white/20 rounded-2xl flex items-center justify-center mr-4 sm:mr-6 shadow-xl">
+                                                <i class="fas fa-train text-white text-xl sm:text-2xl"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-2xl sm:text-3xl md:text-4xl font-black mb-1 sm:mb-2" id="trainName"></h4>
+                                                <p class="text-white/80 text-base sm:text-lg md:text-xl font-semibold" id="trainNumber"></p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h4 class="text-4xl font-black mb-2" id="trainName"></h4>
-                                            <p class="text-white/80 text-xl font-semibold" id="trainNumber"></p>
+                                        <div class="glass-dark rounded-2xl p-4 sm:p-6">
+                                            <p class="text-white/80 text-sm mb-1 sm:mb-2 font-medium">Current Status</p>
+                                            <p class="text-white font-bold text-lg sm:text-xl" id="trainStatus"></p>
                                         </div>
                                     </div>
-                                    <div class="glass-dark rounded-2xl p-6 status-pulse">
-                                        <p class="text-white/80 text-sm mb-2 font-medium">Current Status</p>
-                                        <p class="text-white font-bold text-xl" id="trainStatus"></p>
-                                    </div>
-                                </div>
-                                
-                                <div class="text-center">
-                                    <div class="glass-dark rounded-2xl p-6">
-                                        <p class="text-white/80 text-sm mb-3 font-medium">PNR Number</p>
-                                        <p class="text-4xl font-black font-mono" id="displayPnr"></p>
-                                        <div class="mt-4 inline-flex items-center bg-white/20 rounded-full px-6 py-3">
-                                            <i class="fas fa-chart-bar mr-3"></i>
-                                            <span class="text-sm font-bold" id="chartStatus"></span>
+                                    
+                                    <div class="text-center">
+                                        <div class="glass-dark rounded-2xl p-4 sm:p-6">
+                                            <p class="text-white/80 text-sm mb-2 sm:mb-3 font-medium">PNR Number</p>
+                                            <p class="text-3xl sm:text-4xl font-black font-mono" id="displayPnr"></p>
+                                            <div class="mt-3 sm:mt-4 inline-flex items-center bg-white/20 rounded-full px-4 sm:px-6 py-2 sm:py-3">
+                                                <i class="fas fa-chart-bar mr-2 sm:mr-3"></i>
+                                                <span class="text-xs sm:text-sm font-bold" id="chartStatus"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="text-center">
-                                    <div class="glass-dark rounded-2xl p-6">
-                                        <p class="text-white/80 text-sm mb-3 font-medium">Passengers</p>
-                                        <p class="text-4xl font-black" id="passengerCount"></p>
-                                        <div class="mt-4 inline-flex items-center bg-white/20 rounded-full px-6 py-3">
-                                            <i class="fas fa-chair mr-3"></i>
-                                            <span class="text-sm font-bold" id="journeyClass"></span>
+                                    
+                                    <div class="text-center">
+                                        <div class="glass-dark rounded-2xl p-4 sm:p-6">
+                                            <p class="text-white/80 text-sm mb-2 sm:mb-3 font-medium">Passengers</p>
+                                            <p class="text-3xl sm:text-4xl font-black" id="passengerCount"></p>
+                                            <div class="mt-3 sm:mt-4 inline-flex items-center bg-white/20 rounded-full px-4 sm:px-6 py-2 sm:py-3">
+                                                <i class="fas fa-chair mr-2 sm:mr-3"></i>
+                                                <span class="text-xs sm:text-sm font-bold" id="journeyClass"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Enhanced Content Area -->
-                    <div class="p-12">
-                        <!-- Conditional Live Train Status Section -->
-                        <div id="liveTrainStatus" class="mb-16 hidden">
-                            <div class="flex items-center mb-10">
-                                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
-                                    <i class="fas fa-broadcast-tower text-white"></i>
-                                </div>
-                                <h5 class="text-3xl font-black text-slate-800">Live Train Status</h5>
-                                <div class="ml-4 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-bold flex items-center">
-                                    <div class="w-2 h-2 bg-green-500 rounded-full mr-2 live-indicator"></div>
-                                    LIVE
-                                </div>
-                            </div>
-                            
-                            <div class="grid md:grid-cols-3 gap-8 mb-10">
-                                <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-3xl p-8 border-2 border-red-200 feature-card">
-                                    <div class="flex items-center mb-6">
-                                        <div class="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
-                                            <i class="fas fa-map-marker-alt text-white"></i>
+                        <!-- Enhanced Content Area -->
+                        <div class="p-8 sm:p-10 md:p-12">
+                            <!-- Enhanced Journey Route -->
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 mb-12 sm:mb-16">
+                                <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl sm:rounded-3xl p-8 sm:p-10 border-2 border-green-200 animate-slide-in-left feature-card">
+                                    <div class="flex items-center mb-6 sm:mb-8">
+                                        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mr-4 sm:mr-6 shadow-xl">
+                                            <i class="fas fa-play text-white text-lg sm:text-xl"></i>
                                         </div>
-                                        <h6 class="font-black text-slate-800 text-lg">Previous Station</h6>
+                                        <h5 class="text-2xl sm:text-3xl font-black text-slate-800">Departure</h5>
                                     </div>
-                                    <p class="text-2xl font-black text-slate-800 mb-3" id="previousStation">Loading...</p>
-                                    <p class="text-sm text-slate-600 font-semibold" id="previousStationTime">Departed at --:--</p>
+                                    <p class="text-2xl sm:text-3xl font-black text-slate-800 mb-3 sm:mb-4" id="sourceStation"></p>
+                                    <div class="space-y-2 sm:space-y-3">
+                                        <p class="text-slate-600 flex items-center font-semibold text-sm sm:text-base">
+                                            <i class="fas fa-calendar mr-3 sm:mr-4 text-green-500 text-base sm:text-lg"></i>
+                                            <span id="departureDateTime" class="font-bold"></span>
+                                        </p>
+                                        <p class="text-slate-600 flex items-center font-semibold text-sm sm:text-base">
+                                            <i class="fas fa-map-marker-alt mr-3 sm:mr-4 text-green-500 text-base sm:text-lg"></i>
+                                            Boarding: <span id="boardingPoint" class="font-bold ml-2"></span>
+                                        </p>
+                                    </div>
                                 </div>
                                 
-                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl p-8 border-2 border-blue-200 feature-card">
-                                    <div class="flex items-center mb-6">
-                                        <div class="w-12 h-12 bg-blue-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl live-indicator">
-                                            <i class="fas fa-train text-white"></i>
+                                <div class="bg-gradient-to-br from-red-50 to-pink-100 rounded-2xl sm:rounded-3xl p-8 sm:p-10 border-2 border-red-200 animate-slide-in-right feature-card">
+                                    <div class="flex items-center mb-6 sm:mb-8">
+                                        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl flex items-center justify-center mr-4 sm:mr-6 shadow-xl">
+                                            <i class="fas fa-stop text-white text-lg sm:text-xl"></i>
                                         </div>
-                                        <h6 class="font-black text-slate-800 text-lg">Current Status</h6>
+                                        <h5 class="text-2xl sm:text-3xl font-black text-slate-800">Arrival</h5>
                                     </div>
-                                    <p class="text-2xl font-black text-slate-800 mb-4" id="currentTrainStatus">On Time</p>
-                                    <div class="train-track"></div>
-                                </div>
-                                
-                                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-3xl p-8 border-2 border-green-200 feature-card">
-                                    <div class="flex items-center mb-6">
-                                        <div class="w-12 h-12 bg-green-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
-                                            <i class="fas fa-flag-checkered text-white"></i>
-                                        </div>
-                                        <h6 class="font-black text-slate-800 text-lg">Next Station</h6>
+                                    <p class="text-2xl sm:text-3xl font-black text-slate-800 mb-3 sm:mb-4" id="destinationStation"></p>
+                                    <div class="space-y-2 sm:space-y-3">
+                                        <p class="text-slate-600 flex items-center font-semibold text-sm sm:text-base">
+                                            <i class="fas fa-calendar mr-3 sm:mr-4 text-red-500 text-base sm:text-lg"></i>
+                                            <span id="arrivalDateTime" class="font-bold"></span>
+                                        </p>
+                                        <p class="text-slate-600 flex items-center font-semibold text-sm sm:text-base">
+                                            <i class="fas fa-route mr-3 sm:mr-4 text-red-500 text-base sm:text-lg"></i>
+                                            Distance: <span id="distance" class="font-bold ml-2"></span> km
+                                        </p>
                                     </div>
-                                    <p class="text-2xl font-black text-slate-800 mb-3" id="nextStation">Loading...</p>
-                                    <p class="text-sm text-slate-600 font-semibold" id="nextStationTime">Expected at --:--</p>
                                 </div>
                             </div>
-                            
-                            <!-- Delay Information -->
-                            <div id="delayInfo" class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-3xl p-8 border-2 border-yellow-200 shadow-xl">
-                                <div class="flex items-center justify-between">
+
+                            <!-- Enhanced Booking Information -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-12 sm:mb-16">
+                                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center border-2 border-purple-200 feature-card">
+                                    <div class="w-12 h-12 sm:w-14 h-14 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl">
+                                        <i class="fas fa-calendar-alt text-white text-lg sm:text-xl"></i>
+                                    </div>
+                                    <p class="text-sm text-slate-600 mb-2 sm:mb-3 font-semibold">Booking Date</p>
+                                    <p class="font-black text-base sm:text-lg" id="bookingDate"></p>
+                                </div>
+                                
+                                <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center border-2 border-yellow-200 feature-card">
+                                    <div class="w-12 h-12 sm:w-14 h-14 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl">
+                                        <i class="fas fa-rupee-sign text-white text-lg sm:text-xl"></i>
+                                    </div>
+                                    <p class="text-sm text-slate-600 mb-2 sm:mb-3 font-semibold">Total Fare</p>
+                                    <p class="font-black text-lg sm:text-xl" id="totalFare"></p>
+                                </div>
+                                
+                                <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center border-2 border-indigo-200 feature-card">
+                                    <div class="w-12 h-12 sm:w-14 h-14 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl">
+                                        <i class="fas fa-ticket-alt text-white text-lg sm:text-xl"></i>
+                                    </div>
+                                    <p class="text-sm text-slate-600 mb-2 sm:mb-3 font-semibold">Quota</p>
+                                    <p class="font-black text-lg sm:text-xl" id="quota"></p>
+                                </div>
+                                
+                                <div class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center border-2 border-teal-200 feature-card">
+                                    <div class="w-12 h-12 sm:w-14 h-14 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl">
+                                        <i class="fas fa-exchange-alt text-white text-lg sm:text-xl"></i>
+                                    </div>
+                                    <p class="text-sm text-slate-600 mb-2 sm:mb-3 font-semibold">Vikalp</p>
+                                    <p class="font-black text-lg sm:text-xl" id="vikalpStatus"></p>
+                                </div>
+                            </div>
+
+                            <!-- Enhanced Passenger Details -->
+                            <div class="mb-12 sm:mb-16">
+                                <div class="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-10 gap-4 sm:gap-0">
                                     <div class="flex items-center">
-                                        <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
-                                            <i class="fas fa-clock text-white"></i>
+                                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-rail-orange to-red-500 rounded-2xl flex items-center justify-center mr-3 sm:mr-4 shadow-xl">
+                                            <i class="fas fa-users text-white"></i>
                                         </div>
-                                        <div>
-                                            <h6 class="font-black text-slate-800 text-lg">Delay Status</h6>
-                                            <p class="text-sm text-slate-600 font-semibold">Real-time delay information</p>
-                                        </div>
+                                        <h5 class="text-xl sm:text-2xl md:text-3xl font-black text-slate-800">Passenger Details</h5>
                                     </div>
-                                    <div class="text-right">
-                                        <p class="text-4xl font-black text-orange-600 delay-badge" id="delayMinutes">0</p>
-                                        <p class="text-sm text-slate-600 font-semibold">minutes delay</p>
+                                    <div class="bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-4 sm:px-6 py-2 sm:py-3 rounded-full font-bold shadow-xl text-sm sm:text-base">
+                                        <span id="confirmedCount">0</span> Confirmed
+                                    </div>
+                                </div>
+                                
+                                <div class="glass-effect rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-white/30">
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full">
+                                            <thead class="bg-gradient-to-r from-slate-50 to-blue-50">
+                                                <tr>
+                                                    <th class="px-4 py-3 sm:px-6 sm:py-4 text-left font-black text-slate-800 border-b-2 border-slate-200 text-sm sm:text-base">
+                                                        <i class="fas fa-hashtag mr-2 text-slate-500"></i>S.No
+                                                    </th>
+                                                    <th class="px-4 py-3 sm:px-6 sm:py-4 text-left font-black text-slate-800 border-b-2 border-slate-200 text-sm sm:text-base">
+                                                        <i class="fas fa-bookmark mr-2 text-blue-500"></i>Booking Status
+                                                    </th>
+                                                    <th class="px-4 py-3 sm:px-6 sm:py-4 text-left font-black text-slate-800 border-b-2 border-slate-200 text-sm sm:text-base">
+                                                        <i class="fas fa-check-circle mr-2 text-green-500"></i>Current Status
+                                                    </th>
+                                                    <th class="px-4 py-3 sm:px-6 sm:py-4 text-center font-black text-slate-800 border-b-2 border-slate-200 text-sm sm:text-base">
+                                                        <i class="fas fa-subway mr-2 text-purple-500"></i>Coach
+                                                    </th>
+                                                    <th class="px-4 py-3 sm:px-6 sm:py-4 text-center font-black text-slate-800 border-b-2 border-slate-200 text-sm sm:text-base">
+                                                        <i class="fas fa-bed mr-2 text-orange-500"></i>Berth
+                                                    </th>
+                                                    <th class="px-4 py-3 sm:px-6 sm:py-4 text-center font-black text-slate-800 border-b-2 border-slate-200 text-sm sm:text-base">
+                                                        <i class="fas fa-info-circle mr-2 text-indigo-500"></i>Type
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="passengerTable">
+                                                <!-- Passenger rows will be inserted here -->
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Enhanced Journey Route -->
-                        <div class="grid lg:grid-cols-2 gap-10 mb-16">
-                            <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-3xl p-10 border-2 border-green-200 animate-slide-in-left feature-card">
-                                <div class="flex items-center mb-8">
-                                    <div class="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mr-6 shadow-xl">
-                                        <i class="fas fa-play text-white text-xl"></i>
-                                    </div>
-                                    <h5 class="text-3xl font-black text-slate-800">Departure</h5>
-                                </div>
-                                <p class="text-3xl font-black text-slate-800 mb-4" id="sourceStation"></p>
-                                <div class="space-y-3">
-                                    <p class="text-slate-600 flex items-center font-semibold">
-                                        <i class="fas fa-calendar mr-4 text-green-500 text-lg"></i>
-                                        <span id="departureDateTime" class="font-bold"></span>
-                                    </p>
-                                    <p class="text-slate-600 flex items-center font-semibold">
-                                        <i class="fas fa-map-marker-alt mr-4 text-green-500 text-lg"></i>
-                                        Boarding: <span id="boardingPoint" class="font-bold ml-2"></span>
-                                    </p>
-                                </div>
+                            <!-- Enhanced Action Buttons -->
+                            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center no-print">
+                                <button onclick="printPNRStatus()" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:scale-105">
+                                    <i class="fas fa-print mr-2 sm:mr-3"></i>
+                                    Print Ticket Details
+                                </button>
+                                
+                                <button onclick="shareStatus()" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:scale-105">
+                                    <i class="fas fa-share-alt mr-2 sm:mr-3"></i>
+                                    Share Status
+                                </button>
+                                
+                                <button onclick="hideAllSections(); document.getElementById('pnrNumber').value = ''; document.getElementById('pnrNumber').focus();" class="btn-primary text-white px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:scale-105">
+                                    <i class="fas fa-search mr-2 sm:mr-3"></i>
+                                    Check Another PNR
+                                </button>
                             </div>
-                            
-                            <div class="bg-gradient-to-br from-red-50 to-pink-100 rounded-3xl p-10 border-2 border-red-200 animate-slide-in-right feature-card">
-                                <div class="flex items-center mb-8">
-                                    <div class="w-14 h-14 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl flex items-center justify-center mr-6 shadow-xl">
-                                        <i class="fas fa-stop text-white text-xl"></i>
-                                    </div>
-                                    <h5 class="text-3xl font-black text-slate-800">Arrival</h5>
-                                </div>
-                                <p class="text-3xl font-black text-slate-800 mb-4" id="destinationStation"></p>
-                                <div class="space-y-3">
-                                    <p class="text-slate-600 flex items-center font-semibold">
-                                        <i class="fas fa-calendar mr-4 text-red-500 text-lg"></i>
-                                        <span id="arrivalDateTime" class="font-bold"></span>
-                                    </p>
-                                    <p class="text-slate-600 flex items-center font-semibold">
-                                        <i class="fas fa-route mr-4 text-red-500 text-lg"></i>
-                                        Distance: <span id="distance" class="font-bold ml-2"></span> km
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Enhanced Booking Information -->
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-3xl p-8 text-center border-2 border-purple-200 feature-card">
-                                <div class="w-14 h-14 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                                    <i class="fas fa-calendar-alt text-white text-xl"></i>
-                                </div>
-                                <p class="text-sm text-slate-600 mb-3 font-semibold">Booking Date</p>
-                                <p class="font-black text-lg" id="bookingDate"></p>
-                            </div>
-                            
-                            <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-3xl p-8 text-center border-2 border-yellow-200 feature-card">
-                                <div class="w-14 h-14 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                                    <i class="fas fa-rupee-sign text-white text-xl"></i>
-                                </div>
-                                <p class="text-sm text-slate-600 mb-3 font-semibold">Total Fare</p>
-                                <p class="font-black text-xl" id="totalFare"></p>
-                            </div>
-                            
-                            <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-3xl p-8 text-center border-2 border-indigo-200 feature-card">
-                                <div class="w-14 h-14 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                                    <i class="fas fa-ticket-alt text-white text-xl"></i>
-                                </div>
-                                <p class="text-sm text-slate-600 mb-3 font-semibold">Quota</p>
-                                <p class="font-black text-xl" id="quota"></p>
-                            </div>
-                            
-                            <div class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-3xl p-8 text-center border-2 border-teal-200 feature-card">
-                                <div class="w-14 h-14 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-                                    <i class="fas fa-exchange-alt text-white text-xl"></i>
-                                </div>
-                                <p class="text-sm text-slate-600 mb-3 font-semibold">Vikalp</p>
-                                <p class="font-black text-xl" id="vikalpStatus"></p>
-                            </div>
-                        </div>
-
-                        <!-- Enhanced Passenger Details -->
-                        <div class="mb-16">
-                            <div class="flex items-center justify-between mb-10">
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 bg-gradient-to-r from-rail-orange to-red-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
-                                        <i class="fas fa-users text-white"></i>
-                                    </div>
-                                    <h5 class="text-3xl font-black text-slate-800">Passenger Details</h5>
-                                </div>
-                                <div class="bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-6 py-3 rounded-full font-bold shadow-xl">
-                                    <span id="confirmedCount">0</span> Confirmed
-                                </div>
-                            </div>
-                            
-                            <div class="glass-effect rounded-3xl shadow-2xl overflow-hidden border border-white/30">
-                                <div class="overflow-x-auto">
-                                    <table class="w-full">
-                                        <thead class="bg-gradient-to-r from-slate-50 to-blue-50">
-                                            <tr>
-                                                <th class="px-8 py-6 text-left font-black text-slate-800 border-b-2 border-slate-200">
-                                                    <i class="fas fa-hashtag mr-3 text-slate-500"></i>S.No
-                                                </th>
-                                                <th class="px-8 py-6 text-left font-black text-slate-800 border-b-2 border-slate-200">
-                                                    <i class="fas fa-bookmark mr-3 text-blue-500"></i>Booking Status
-                                                </th>
-                                                <th class="px-8 py-6 text-left font-black text-slate-800 border-b-2 border-slate-200">
-                                                    <i class="fas fa-check-circle mr-3 text-green-500"></i>Current Status
-                                                </th>
-                                                <th class="px-8 py-6 text-center font-black text-slate-800 border-b-2 border-slate-200">
-                                                    <i class="fas fa-subway mr-3 text-purple-500"></i>Coach
-                                                </th>
-                                                <th class="px-8 py-6 text-center font-black text-slate-800 border-b-2 border-slate-200">
-                                                    <i class="fas fa-bed mr-3 text-orange-500"></i>Berth
-                                                </th>
-                                                <th class="px-8 py-6 text-center font-black text-slate-800 border-b-2 border-slate-200">
-                                                    <i class="fas fa-info-circle mr-3 text-indigo-500"></i>Type
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="passengerTable">
-                                            <!-- Passenger rows will be inserted here -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Enhanced Action Buttons -->
-                        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                            <button onclick="window.print()" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:scale-105">
-                                <i class="fas fa-print mr-3"></i>
-                                Print Ticket Details
-                            </button>
-                            
-                            <button onclick="shareStatus()" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:scale-105">
-                                <i class="fas fa-share-alt mr-3"></i>
-                                Share Status
-                            </button>
-                            
-                            <button onclick="hideAllSections(); document.getElementById('pnrNumber').value = ''; document.getElementById('pnrNumber').focus();" class="btn-primary text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:scale-105">
-                                <i class="fas fa-search mr-3"></i>
-                                Check Another PNR
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Enhanced Features Section -->
-    <section id="features" class="py-32 bg-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center mb-24">
-                <div class="inline-flex items-center glass-effect rounded-full px-8 py-4 mb-10 shadow-xl">
-                    <i class="fas fa-star text-yellow-500 mr-3"></i>
-                    <span class="text-sm font-bold text-slate-700">Premium Features</span>
-                </div>
-                <h3 class="text-6xl font-black text-slate-800 mb-8">Why Choose RailTracker?</h3>
-                <p class="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium">
-                    Experience the most advanced and comprehensive train tracking platform in India with real-time updates and intelligent insights
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-10">
-                <div class="feature-card glass-effect rounded-3xl p-12 shadow-2xl border border-white/30 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full -translate-y-20 translate-x-20"></div>
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
-                            <i class="fas fa-bolt text-white text-3xl"></i>
-                        </div>
-                        <h4 class="text-3xl font-black text-slate-800 mb-6 text-center">Lightning Fast</h4>
-                        <p class="text-slate-600 leading-relaxed text-center text-lg font-medium">
-                            Get instant PNR status updates in under 1 second with our optimized infrastructure and real-time data processing.
-                        </p>
+        <!-- Enhanced Features Section -->
+        <section id="features" class="py-20 sm:py-24 md:py-32 bg-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-16 sm:mb-20 md:mb-24">
+                    <div class="inline-flex items-center glass-effect rounded-full px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 mb-8 sm:mb-10 shadow-xl">
+                        <i class="fas fa-star text-yellow-500 mr-2 sm:mr-3"></i>
+                        <span class="text-xs sm:text-sm font-bold text-slate-700">Premium Features</span>
                     </div>
+                    <h3 class="text-4xl sm:text-5xl md:text-6xl font-black text-slate-800 mb-6 sm:mb-8">Why Choose RailTracker?</h3>
+                    <p class="text-lg sm:text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium">
+                        Experience the most advanced and comprehensive train tracking platform in India with real-time updates and intelligent insights
+                    </p>
                 </div>
                 
-                <div class="feature-card glass-effect rounded-3xl p-12 shadow-2xl border border-white/30 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full -translate-y-20 translate-x-20"></div>
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
-                            <i class="fas fa-broadcast-tower text-white text-3xl"></i>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
+                    <div class="feature-card glass-effect rounded-2xl sm:rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl border border-white/30 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full -translate-y-16 translate-x-16 sm:-translate-y-20 sm:translate-x-20"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl">
+                                <i class="fas fa-bolt text-white text-2xl sm:text-3xl"></i>
+                            </div>
+                            <h4 class="text-2xl sm:text-3xl font-black text-slate-800 mb-4 sm:mb-6 text-center">Lightning Fast</h4>
+                            <p class="text-slate-600 leading-relaxed text-center text-base sm:text-lg font-medium">
+                                Get instant PNR status updates in under 1 second with our optimized infrastructure and real-time data processing.
+                            </p>
                         </div>
-                        <h4 class="text-3xl font-black text-slate-800 mb-6 text-center">Live Tracking</h4>
-                        <p class="text-slate-600 leading-relaxed text-center text-lg font-medium">
-                            Real-time train location, current station, next station, and delay information updated every 30 seconds.
-                        </p>
                     </div>
-                </div>
-                
-                <div class="feature-card glass-effect rounded-3xl p-12 shadow-2xl border border-white/30 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full -translate-y-20 translate-x-20"></div>
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
-                            <i class="fas fa-shield-alt text-white text-3xl"></i>
+                    
+                    <div class="feature-card glass-effect rounded-2xl sm:rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl border border-white/30 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full -translate-y-16 translate-x-16 sm:-translate-y-20 sm:translate-x-20"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl">
+                                <i class="fas fa-broadcast-tower text-white text-2xl sm:text-3xl"></i>
+                            </div>
+                            <h4 class="text-2xl sm:text-3xl font-black text-slate-800 mb-4 sm:mb-6 text-center">Live Tracking</h4>
+                            <p class="text-slate-600 leading-relaxed text-center text-base sm:text-lg font-medium">
+                                Real-time train location, current station, next station, and delay information updated every 30 seconds.
+                            </p>
                         </div>
-                        <h4 class="text-3xl font-black text-slate-800 mb-6 text-center">100% Secure</h4>
-                        <p class="text-slate-600 leading-relaxed text-center text-lg font-medium">
-                            Enterprise-grade security with encrypted connections. We never store your personal information.
-                        </p>
+                    </div>
+                    
+                    <div class="feature-card glass-effect rounded-2xl sm:rounded-3xl p-8 sm:p-10 md:p-12 shadow-2xl border border-white/30 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full -translate-y-16 translate-x-16 sm:-translate-y-20 sm:translate-x-20"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl">
+                                <i class="fas fa-shield-alt text-white text-2xl sm:text-3xl"></i>
+                            </div>
+                            <h4 class="text-2xl sm:text-3xl font-black text-slate-800 mb-4 sm:mb-6 text-center">100% Secure</h4>
+                            <p class="text-slate-600 leading-relaxed text-center text-base sm:text-lg font-medium">
+                                Enterprise-grade security with encrypted connections. We never store your personal information.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Enhanced Services Section -->
-    <section id="services" class="py-32 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-24">
-                <h3 class="text-6xl font-black text-slate-800 mb-8">Our Premium Services</h3>
-                <p class="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium">
-                    Comprehensive railway information services designed to make your journey planning effortless
-                </p>
+        <!-- Enhanced Services Section -->
+        <section id="services" class="py-20 sm:py-24 md:py-32 bg-gradient-to-br from-slate-50 to-blue-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16 sm:mb-20 md:mb-24">
+                    <h3 class="text-4xl sm:text-5xl md:text-6xl font-black text-slate-800 mb-6 sm:mb-8">Our Premium Services</h3>
+                    <p class="text-lg sm:text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium">
+                        Comprehensive railway information services designed to make your journey planning effortless
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
+                    <div class="glass-effect rounded-2xl sm:rounded-3xl p-8 sm:p-10 text-center shadow-2xl border border-white/30 feature-card group">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-rail-blue rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-search text-white text-2xl sm:text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl sm:text-2xl font-black text-slate-800 mb-4 sm:mb-6">PNR Status</h4>
+                        <p class="text-slate-600 leading-relaxed font-medium text-sm sm:text-base">Real-time passenger name record status with live updates and detailed information</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-2xl sm:rounded-3xl p-8 sm:p-10 text-center shadow-2xl border border-white/30 feature-card group">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-orange-500 to-rail-orange rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-map-marked-alt text-white text-2xl sm:text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl sm:text-2xl font-black text-slate-800 mb-4 sm:mb-6">Live Tracking</h4>
+                        <p class="text-slate-600 leading-relaxed font-medium text-sm sm:text-base">Track train location, current station, delays, and estimated arrival times</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-2xl sm:rounded-3xl p-8 sm:p-10 text-center shadow-2xl border border-white/30 feature-card group">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-green-500 to-rail-green rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-chair text-white text-2xl sm:text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl sm:text-2xl font-black text-slate-800 mb-4 sm:mb-6">Seat Availability</h4>
+                        <p class="text-slate-600 leading-relaxed font-medium text-sm sm:text-base">Check available seats across all classes for your preferred travel dates</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-2xl sm:rounded-3xl p-8 sm:p-10 text-center shadow-2xl border border-white/30 feature-card group">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-500 to-rail-purple rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-rupee-sign text-white text-2xl sm:text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl sm:text-2xl font-black text-slate-800 mb-4 sm:mb-6">Fare Calculator</h4>
+                        <p class="text-slate-600 leading-relaxed font-medium text-sm sm:text-base">Get accurate fare information between any two stations across India</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-                <div class="glass-effect rounded-3xl p-10 text-center shadow-2xl border border-white/30 feature-card group">
-                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-rail-blue rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-search text-white text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black text-slate-800 mb-6">PNR Status</h4>
-                    <p class="text-slate-600 leading-relaxed font-medium">Real-time passenger name record status with live updates and detailed information</p>
-                </div>
-                
-                <div class="glass-effect rounded-3xl p-10 text-center shadow-2xl border border-white/30 feature-card group">
-                    <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-rail-orange rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-map-marked-alt text-white text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black text-slate-800 mb-6">Live Tracking</h4>
-                    <p class="text-slate-600 leading-relaxed font-medium">Track train location, current station, delays, and estimated arrival times</p>
-                </div>
-                
-                <div class="glass-effect rounded-3xl p-10 text-center shadow-2xl border border-white/30 feature-card group">
-                    <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-rail-green rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-chair text-white text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black text-slate-800 mb-6">Seat Availability</h4>
-                    <p class="text-slate-600 leading-relaxed font-medium">Check available seats across all classes for your preferred travel dates</p>
-                </div>
-                
-                <div class="glass-effect rounded-3xl p-10 text-center shadow-2xl border border-white/30 feature-card group">
-                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-rail-purple rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-rupee-sign text-white text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black text-slate-800 mb-6">Fare Calculator</h4>
-                    <p class="text-slate-600 leading-relaxed font-medium">Get accurate fare information between any two stations across India</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Enhanced Footer -->
     <footer id="contact" class="bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
         <div class="absolute inset-0 bg-black/30"></div>
-        <div class="container mx-auto px-4 py-20 relative z-10">
-            <div class="grid md:grid-cols-4 gap-12 mb-16">
+        <div class="container mx-auto px-4 py-16 sm:py-20 relative z-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-12 sm:mb-16">
                 <div>
-                    <div class="flex items-center space-x-4 mb-8">
-                        <div class="w-16 h-16 hero-gradient rounded-2xl flex items-center justify-center shadow-2xl">
-                            <i class="fas fa-train text-white text-2xl"></i>
+                    <div class="flex items-center space-x-3 sm:space-x-4 mb-6 sm:mb-8">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 hero-gradient rounded-2xl flex items-center justify-center shadow-2xl">
+                            <i class="fas fa-train text-white text-xl sm:text-2xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-3xl font-black">RailTracker</h3>
-                            <p class="text-slate-300 text-sm font-semibold">Live Railway Tracking</p>
+                            <h3 class="text-2xl sm:text-3xl font-black">RailTracker</h3>
+                            <p class="text-slate-300 text-xs sm:text-sm font-semibold">Live Railway Tracking</p>
                         </div>
                     </div>
-                    <p class="text-slate-300 leading-relaxed mb-8 font-medium">
+                    <p class="text-slate-300 leading-relaxed mb-6 sm:mb-8 font-medium text-sm sm:text-base">
                         India's most trusted and comprehensive railway journey tracking platform with real-time updates and intelligent insights.
                     </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
-                            <i class="fab fa-facebook-f"></i>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
+                            <i class="fab fa-facebook-f text-sm sm:text-base"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
-                            <i class="fab fa-twitter"></i>
+                        <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
+                            <i class="fab fa-twitter text-sm sm:text-base"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
-                            <i class="fab fa-instagram"></i>
+                        <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
+                            <i class="fab fa-instagram text-sm sm:text-base"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
-                            <i class="fab fa-linkedin-in"></i>
+                        <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
+                            <i class="fab fa-linkedin-in text-sm sm:text-base"></i>
                         </a>
                     </div>
                 </div>
                 
                 <div>
-                    <h3 class="text-xl font-black mb-8 flex items-center">
-                        <i class="fas fa-link mr-3 text-blue-400"></i>Quick Links
+                    <h3 class="text-lg sm:text-xl font-black mb-6 sm:mb-8 flex items-center">
+                        <i class="fas fa-link mr-2 sm:mr-3 text-blue-400"></i>Quick Links
                     </h3>
-                    <ul class="space-y-4 text-slate-300">
+                    <ul class="space-y-3 sm:space-y-4 text-slate-300 text-sm sm:text-base">
                         <li><a href="#home" class="hover:text-white transition-colors flex items-center group font-medium">
-                            <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>PNR Status
+                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>PNR Status
                         </a></li>
                         <li><a href="#" class="hover:text-white transition-colors flex items-center group font-medium">
-                            <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Live Tracking
+                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Live Tracking
                         </a></li>
                         <li><a href="#" class="hover:text-white transition-colors flex items-center group font-medium">
-                            <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Seat Availability
+                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Seat Availability
                         </a></li>
                         <li><a href="#" class="hover:text-white transition-colors flex items-center group font-medium">
-                            <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Fare Calculator
+                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Fare Calculator
                         </a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-xl font-black mb-8 flex items-center">
-                        <i class="fas fa-headset mr-3 text-green-400"></i>Support
+                    <h3 class="text-lg sm:text-xl font-black mb-6 sm:mb-8 flex items-center">
+                        <i class="fas fa-headset mr-2 sm:mr-3 text-green-400"></i>Support
                     </h3>
-                    <ul class="space-y-4 text-slate-300">
+                    <ul class="space-y-3 sm:space-y-4 text-slate-300 text-sm sm:text-base">
                         <li><a href="./pages/about.html" target="_blank" class="hover:text-white transition-colors flex items-center group font-medium">
-                            <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>About Us
+                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>About Us
                         </a></li>
                         <li><a href="./pages/contact.html" target="_blank" class="hover:text-white transition-colors flex items-center group font-medium">
-                            <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Contact Us
+                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Contact Us
                         </a></li>
                         <li><a href="./pages/disclaimer.html" target="_blank" class="hover:text-white transition-colors flex items-center group font-medium">
-                            <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Disclaimer
+                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Disclaimer
                         </a></li>
                         <li><a href="./pages/privacy-policy.html" target="_blank" class="hover:text-white transition-colors flex items-center group font-medium">
-                            <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Privacy Policy
+                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Privacy Policy
                         </a></li>
                         <li><a href="./pages/terms-of-services.html" target="_blank" class="hover:text-white transition-colors flex items-center group font-medium">
-                            <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Terms of Service
+                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Terms of Service
                         </a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-xl font-black mb-8 flex items-center">
-                        <i class="fas fa-phone mr-3 text-yellow-400"></i>Contact Info
+                    <h3 class="text-lg sm:text-xl font-black mb-6 sm:mb-8 flex items-center">
+                        <i class="fas fa-phone mr-2 sm:mr-3 text-yellow-400"></i>Contact Info
                     </h3>
-                    <ul class="space-y-6 text-slate-300">
+                    <ul class="space-y-4 sm:space-y-6 text-slate-300">
                         <li class="flex items-center">
-                            <div class="w-10 h-10 bg-blue-500/20 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
-                                <i class="fas fa-phone text-blue-400 text-sm"></i>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/20 rounded-2xl flex items-center justify-center mr-3 sm:mr-4 shadow-xl">
+                                <i class="fas fa-phone text-blue-400 text-xs sm:text-sm"></i>
                             </div>
                             <div>
                                 <p class="text-xs text-slate-400 font-medium">Railway Enquiry</p>
-                                <p class="font-bold text-lg">139</p>
+                                <p class="font-bold text-base sm:text-lg">139</p>
                             </div>
                         </li>
                         <li class="flex items-center">
-                            <div class="w-10 h-10 bg-green-500/20 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
-                                <i class="fas fa-envelope text-green-400 text-sm"></i>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-green-500/20 rounded-2xl flex items-center justify-center mr-3 sm:mr-4 shadow-xl">
+                                <i class="fas fa-envelope text-green-400 text-xs sm:text-sm"></i>
                             </div>
                             <div>
                                 <p class="text-xs text-slate-400 font-medium">Email Support</p>
-                                <p class="font-bold text-lg">support@railtracker.in</p>
+                                <p class="font-bold text-base sm:text-lg">support@railtracker.in</p>
                             </div>
                         </li>
                         <li class="flex items-center">
-                            <div class="w-10 h-10 bg-purple-500/20 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
-                                <i class="fas fa-globe text-purple-400 text-sm"></i>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-purple-500/20 rounded-2xl flex items-center justify-center mr-3 sm:mr-4 shadow-xl">
+                                <i class="fas fa-globe text-purple-400 text-xs sm:text-sm"></i>
                             </div>
                             <div>
                                 <p class="text-xs text-slate-400 font-medium">Official Website</p>
-                                <p class="font-bold text-lg">indianrailways.gov.in</p>
+                                <p class="font-bold text-base sm:text-lg">indianrailways.gov.in</p>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
             
-            <div class="border-t border-white/10 pt-12">
+            <div class="border-t border-white/10 pt-8 sm:pt-12">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-slate-400 mb-6 md:mb-0 flex items-center font-medium">
-                        <i class="fas fa-copyright mr-3"></i>
+                    <p class="text-slate-400 mb-4 md:mb-0 flex items-center font-medium text-sm sm:text-base">
+                        <i class="fas fa-copyright mr-2 sm:mr-3"></i>
                         2024 RailTracker. All rights reserved.
                     </p>
-                    <div class="flex items-center space-x-8 text-sm text-slate-400">
-                        <span class="flex items-center glass-dark px-4 py-2 rounded-full">
-                            <i class="fas fa-shield-check text-green-400 mr-2"></i>
+                    <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm text-slate-400">
+                        <span class="flex items-center glass-dark px-3 py-1 sm:px-4 sm:py-2 rounded-full">
+                            <i class="fas fa-shield-check text-green-400 mr-1 sm:mr-2"></i>
                             SSL Secured
                         </span>
-                        <span class="flex items-center glass-dark px-4 py-2 rounded-full">
-                            <i class="fas fa-clock text-blue-400 mr-2"></i>
+                        <span class="flex items-center glass-dark px-3 py-1 sm:px-4 sm:py-2 rounded-full">
+                            <i class="fas fa-clock text-blue-400 mr-1 sm:mr-2"></i>
                             99.9% Uptime
                         </span>
-                        <span class="flex items-center glass-dark px-4 py-2 rounded-full">
-                            <i class="fas fa-users text-purple-400 mr-2"></i>
+                        <span class="flex items-center glass-dark px-3 py-1 sm:px-4 sm:py-2 rounded-full">
+                            <i class="fas fa-users text-purple-400 mr-1 sm:mr-2"></i>
                             50M+ Users
                         </span>
                     </div>
@@ -1140,8 +1237,8 @@
                     arrivalDate: "Jul 9, 2025 7:55:00 AM",
                     distance: 763,
                     isWL: "N",
-                    // Enhanced live tracking data - train has started journey
-                    journeyStarted: true,
+                    // Journey not started - no live tracking
+                    journeyStarted: true, // This mock data indicates journey has started
                     liveStatus: {
                         previousStation: "Roorkee (RK)",
                         previousStationTime: "16:45",
@@ -1317,34 +1414,6 @@
             document.getElementById('passengerCount').textContent = data.numberOfpassenger;
             document.getElementById('journeyClass').textContent = data.journeyClass;
             
-            // Conditional live train status display
-            const liveStatusSection = document.getElementById('liveTrainStatus');
-            if (data.journeyStarted && data.liveStatus) {
-                // Show live tracking for trains that have started journey
-                liveStatusSection.classList.remove('hidden');
-                
-                document.getElementById('previousStation').textContent = getStationName(data.liveStatus.previousStation);
-                document.getElementById('previousStationTime').textContent = `Departed at ${data.liveStatus.previousStationTime}`;
-                document.getElementById('currentTrainStatus').textContent = data.liveStatus.currentStatus;
-                document.getElementById('nextStation').textContent = getStationName(data.liveStatus.nextStation);
-                document.getElementById('nextStationTime').textContent = `Expected at ${data.liveStatus.nextStationTime}`;
-                document.getElementById('delayMinutes').textContent = data.liveStatus.delayMinutes;
-                
-                // Update delay info styling based on delay
-                const delayInfo = document.getElementById('delayInfo');
-                const delayMinutes = data.liveStatus.delayMinutes;
-                if (delayMinutes === 0) {
-                    delayInfo.className = 'bg-gradient-to-r from-green-50 to-emerald-50 rounded-3xl p-8 border-2 border-green-200 shadow-xl';
-                } else if (delayMinutes <= 30) {
-                    delayInfo.className = 'bg-gradient-to-r from-yellow-50 to-orange-50 rounded-3xl p-8 border-2 border-yellow-200 shadow-xl';
-                } else {
-                    delayInfo.className = 'bg-gradient-to-r from-red-50 to-pink-50 rounded-3xl p-8 border-2 border-red-200 shadow-xl';
-                }
-            } else {
-                // Hide live tracking for trains that haven't started journey
-                liveStatusSection.classList.add('hidden');
-            }
-            
             // Populate journey details
             document.getElementById('sourceStation').textContent = getStationName(data.sourceStation);
             document.getElementById('destinationStation').textContent = getStationName(data.destinationStation);
@@ -1377,33 +1446,33 @@
                 const rowBg = isConfirmed ? 'bg-green-50' : 'bg-yellow-50';
                 
                 row.innerHTML = `
-                    <td class="px-8 py-6 font-black text-center text-lg ${rowBg}">
-                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto text-white font-black shadow-xl">
+                    <td class="px-3 py-2 sm:px-4 sm:py-3 font-black text-center text-base sm:text-lg ${rowBg}">
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto text-white font-black shadow-xl">
                             ${passenger.passengerSerialNumber}
                         </div>
                     </td>
-                    <td class="px-8 py-6 ${rowBg}">
-                        <span class="px-6 py-3 rounded-2xl text-sm font-black ${getStatusColor(passenger.bookingStatusDetails)} shadow-xl">
+                    <td class="px-3 py-2 sm:px-4 sm:py-3 ${rowBg}">
+                        <span class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-black ${getStatusColor(passenger.bookingStatusDetails)} shadow-xl">
                             ${passenger.bookingStatusDetails}
                         </span>
                     </td>
-                    <td class="px-8 py-6 ${rowBg}">
-                        <span class="px-6 py-3 rounded-2xl text-sm font-black ${getStatusColor(passenger.currentStatusDetails)} shadow-xl">
+                    <td class="px-3 py-2 sm:px-4 sm:py-3 ${rowBg}">
+                        <span class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-black ${getStatusColor(passenger.currentStatusDetails)} shadow-xl">
                             ${passenger.currentStatusDetails}
                         </span>
                     </td>
-                    <td class="px-8 py-6 text-center font-black text-lg ${rowBg}">
-                        <div class="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl text-white font-black shadow-xl">
+                    <td class="px-3 py-2 sm:px-4 sm:py-3 text-center font-black text-base sm:text-lg ${rowBg}">
+                        <div class="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl text-white font-black shadow-xl">
                             ${passenger.currentCoachId || 'N/A'}
                         </div>
                     </td>
-                    <td class="px-8 py-6 text-center font-black text-lg ${rowBg}">
-                        <div class="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl text-white font-black shadow-xl">
+                    <td class="px-3 py-2 sm:px-4 sm:py-3 text-center font-black text-base sm:text-lg ${rowBg}">
+                        <div class="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl text-white font-black shadow-xl">
                             ${passenger.currentBerthNo || 'N/A'}
                         </div>
                     </td>
-                    <td class="px-8 py-6 text-center ${rowBg}">
-                        <span class="px-4 py-2 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-800 rounded-xl text-sm font-black shadow-xl">
+                    <td class="px-3 py-2 sm:px-4 sm:py-3 text-center ${rowBg}">
+                        <span class="px-3 py-1 sm:px-4 sm:py-2 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-800 rounded-xl text-xs sm:text-sm font-black shadow-xl">
                             ${getBerthTypeName(passenger.currentBerthCode)}
                         </span>
                     </td>
@@ -1503,6 +1572,21 @@
             loadingSpinner.classList.add('hidden');
             errorMessage.classList.add('hidden');
             pnrResult.classList.add('hidden');
+        }
+
+        // Function to print only the PNR status section
+        function printPNRStatus() {
+            const body = document.body;
+
+            // Add a class to the body to trigger print-specific CSS
+            body.classList.add('print-pnr-mode');
+
+            // Use onafterprint to remove the class after printing is done or cancelled
+            window.onafterprint = () => {
+                body.classList.remove('print-pnr-mode');
+            };
+
+            window.print();
         }
 
         // Enhanced input formatting with visual feedback
