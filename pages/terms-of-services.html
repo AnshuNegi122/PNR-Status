@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service - RailTracker</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'rail-blue': '#0f172a',
+                    'rail-orange': '#ea580c',
+                    'rail-green': '#16a34a',
+                    'rail-red': '#dc2626',
+                    'rail-purple': '#7c3aed',
+                    'rail-gold': '#f59e0b',
+                    'track-gray': '#64748b',
+                },
+                animation: {
+                    'float': 'float 6s ease-in-out infinite',
+                    'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    'fade-in': 'fadeIn 1s ease-out',
+                    'slide-up': 'slideUp 0.8s ease-out',
+                    'slide-in-left': 'slideInLeft 1s ease-out',
+                    'slide-in-right': 'slideInRight 1s ease-out',
+                    'bounce-gentle': 'bounceGentle 3s ease-in-out infinite',
+                    'train-move': 'trainMove 4s ease-in-out infinite',
+                    'gradient-shift': 'gradientShift 8s ease infinite',
+                    'shimmer': 'shimmer 2s linear infinite',
+                },
+                keyframes: {
+                    float: {
+                        '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                        '33%': { transform: 'translateY(-10px) rotate(1deg)' },
+                        '66%': { transform: 'translateY(-5px) rotate(-1deg)' }
+                    },
+                    fadeIn: {
+                        '0%': { opacity: '0', transform: 'translateY(20px)' },
+                        '100%': { opacity: '1', transform: 'translateY(0)' }
+                    },
+                    slideUp: {
+                        '0%': { opacity: '0', transform: 'translateY(40px)' },
+                        '100%': { opacity: '1', transform: 'translateY(0)' }
+                    },
+                    slideInLeft: {
+                        '0%': { opacity: '0', transform: 'translateX(-60px)' },
+                        '100%': { opacity: '1', transform: 'translateX(0)' }
+                    },
+                    slideInRight: {
+                        '0%': { opacity: '0', transform: 'translateX(60px)' },
+                        '100%': { opacity: '1', transform: 'translateX(0)' }
+                    },
+                    bounceGentle: {
+                        '0%, 100%': { transform: 'translateY(0)' },
+                        '50%': { transform: 'translateY(-8px)' }
+                    },
+                    trainMove: {
+                        '0%': { transform: 'translateX(-20px)' },
+                        '50%': { transform: 'translateX(20px)' },
+                        '100%': { transform: 'translateX(-20px)' }
+                    },
+                    gradientShift: {
+                        '0%': { backgroundPosition: '0% 50%' },
+                        '50%': { backgroundPosition: '100% 50%' },
+                        '100%': { backgroundPosition: '0% 50%' }
+                    },
+                    shimmer: {
+                        '0%': { transform: 'translateX(-100%)' },
+                        '100%': { transform: 'translateX(100%)' }
+                    }
+                },
+                fontFamily: {
+                    'display': ['Inter', 'system-ui', 'sans-serif'],
+                    'mono': ['JetBrains Mono', 'Consolas', 'monospace'],
+                },
+                boxShadow: {
+                    'glow': '0 0 20px rgba(59, 130, 246, 0.3)',
+                    'glow-orange': '0 0 20px rgba(234, 88, 12, 0.3)',
+                    'inner-glow': 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.1)',
+                }
+            }
+        }
+    }
+</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    * {
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+    
+    .hero-gradient {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #ea580c 75%, #dc2626 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 12s ease infinite;
+    }
+    
+    .glass-effect {
+        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .glass-dark {
+        backdrop-filter: blur(20px);
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #0f172a, #1e40af, #ea580c, #dc2626);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 8s ease infinite;
+    }
+
+    .nav-link {
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: -8px;
+        left: 50%;
+        background: linear-gradient(90deg, #0f172a, #ea580c);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(-50%);
+        border-radius: 2px;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .feature-card {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateY(0);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .train-track {
+        background: linear-gradient(90deg, #16a34a, #0f172a, #ea580c);
+        height: 6px;
+        border-radius: 3px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .train-track::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        animation: shimmer 3s infinite;
+    }
+
+    .status-pulse {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .status-pulse::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        animation: shimmer 4s infinite;
+    }
+
+    .journey-indicator {
+        position: relative;
+    }
+
+    .journey-indicator::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(to bottom, #16a34a, #0f172a, #ea580c);
+        transform: translateX(-50%);
+        border-radius: 2px;
+    }
+
+    .mobile-menu {
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu.active {
+        transform: translateX(0);
+    }
+
+    .input-glow:focus {
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #0f172a, #1e40af, #ea580c);
+        background-size: 200% 200%;
+        transition: all 0.4s ease;
+    }
+
+    .btn-primary:hover {
+        background-position: right center;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    @media print {
+        .no-print { display: none !important; }
+        .print-only { display: block !important; }
+    }
+
+    .live-indicator {
+        animation: pulse 2s infinite;
+    }
+
+    .delay-badge {
+        animation: bounceGentle 3s infinite;
+    }
+</style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-orange-50 min-h-screen font-display">
+<!-- Header -->
+<header class="glass-effect sticky top-0 z-50 border-b border-white/20 shadow-xl">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-20">
+            <!-- Premium Logo and Brand -->
+            <div class="flex items-center space-x-4">
+                <div class="relative group">
+                    <div class="w-16 h-16 hero-gradient rounded-2xl flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-train text-white text-2xl animate-train-move"></i>
+                    </div>
+                    <div class="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center live-indicator">
+                        <i class="fas fa-circle text-white text-xs"></i>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-black gradient-text tracking-tight">RailTracker</h1>
+                    <p class="text-sm text-slate-600 font-semibold flex items-center">
+                        <i class="fas fa-shield-check text-green-500 mr-2"></i>
+                        Live PNR & Train Status
+                    </p>
+                </div>
+            </div>
+
+            <!-- Enhanced Navigation -->
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="index.html#home" class="nav-link text-slate-700 hover:text-rail-blue font-semibold text-lg flex items-center group">
+                    <i class="fas fa-home mr-2 group-hover:scale-110 transition-transform"></i>Home
+                </a>
+                <a href="about.html" class="nav-link text-slate-700 hover:text-rail-blue font-semibold text-lg flex items-center group">
+                    <i class="fas fa-info-circle mr-2 group-hover:scale-110 transition-transform"></i>About
+                </a>
+                <a href="contact.html" class="nav-link text-slate-700 hover:text-rail-blue font-semibold text-lg flex items-center group">
+                    <i class="fas fa-envelope mr-2 group-hover:scale-110 transition-transform"></i>Contact
+                </a>
+                <a href="privacy-policy.html" class="nav-link text-slate-700 hover:text-rail-blue font-semibold text-lg flex items-center group">
+                    <i class="fas fa-user-shield mr-2 group-hover:scale-110 transition-transform"></i>Privacy
+                </a>
+                <a href="terms-of-service.html" class="nav-link text-slate-700 hover:text-rail-blue font-semibold text-lg flex items-center group">
+                    <i class="fas fa-file-contract mr-2 group-hover:scale-110 transition-transform"></i>Terms
+                </a>
+            </nav>
+
+            <!-- Premium CTA -->
+            <div class="hidden md:flex items-center space-x-6">
+                <div class="text-right">
+                    <p class="text-xs text-slate-500 font-medium">Quick Access</p>
+                    <p class="text-sm font-bold text-slate-700">Check PNR Status</p>
+                </div>
+                <a href="index.html#pnr-checker" class="btn-primary text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-glow hover:shadow-glow-orange transition-all duration-300 flex items-center">
+                    <i class="fas fa-search mr-3"></i>
+                    Check Now
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="lg:hidden text-slate-700 hover:text-rail-blue transition-colors p-3 rounded-xl hover:bg-white/50">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Enhanced Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed top-20 left-0 w-full h-screen glass-dark lg:hidden z-40">
+        <nav class="p-8 space-y-8">
+            <a href="index.html#home" class="block text-white hover:text-blue-300 font-bold text-xl flex items-center group">
+                <i class="fas fa-home mr-4 group-hover:scale-110 transition-transform"></i>Home
+            </a>
+            <a href="about.html" class="block text-white hover:text-blue-300 font-bold text-xl flex items-center group">
+                <i class="fas fa-info-circle mr-4 group-hover:scale-110 transition-transform"></i>About
+            </a>
+            <a href="contact.html" class="block text-white hover:text-blue-300 font-bold text-xl flex items-center group">
+                <i class="fas fa-envelope mr-4 group-hover:scale-110 transition-transform"></i>Contact
+            </a>
+            <a href="privacy-policy.html" class="block text-white hover:text-blue-300 font-bold text-xl flex items-center group">
+                <i class="fas fa-user-shield mr-4 group-hover:scale-110 transition-transform"></i>Privacy
+            </a>
+            <a href="terms-of-service.html" class="block text-white hover:text-blue-300 font-bold text-xl flex items-center group">
+                <i class="fas fa-file-contract mr-4 group-hover:scale-110 transition-transform"></i>Terms
+            </a>
+            <div class="pt-6 border-t border-white/20">
+                <a href="index.html#pnr-checker" class="btn-primary text-white px-8 py-4 rounded-2xl font-bold text-lg inline-flex items-center">
+                    <i class="fas fa-search mr-3"></i>Check PNR Status
+                </a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-orange-50">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <div class="glass-effect rounded-3xl shadow-2xl p-10 md:p-16 border-2 border-white/30">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center justify-center w-24 h-24 hero-gradient rounded-full mb-8 shadow-2xl">
+                    <i class="fas fa-file-contract text-white text-4xl"></i>
+                </div>
+                <h2 class="text-5xl font-black text-slate-800 mb-6">Terms of Service</h2>
+                <p class="text-xl text-slate-600 font-medium">Please read these terms carefully before using our service.</p>
+            </div>
+
+            <div class="space-y-8 text-lg text-slate-700 leading-relaxed">
+                <p>
+                    Welcome to RailTracker. These Terms of Service ("Terms") govern your access to and use of the RailTracker website and services (collectively, the "Service"). By accessing or using the Service, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the Service.
+                </p>
+
+                <h3 class="text-3xl font-black text-slate-800 pt-4">1. Use of Service</h3>
+                <ul class="list-disc list-inside space-y-3 pl-4">
+                    <li><span class="font-bold text-rail-blue">Eligibility:</span> You must be at least 13 years old to use this Service. By using the Service, you represent and warrant that you are at least 13 years old.</li>
+                    <li><span class="font-bold text-rail-orange">Permitted Use:</span> The Service is provided for your personal, non-commercial use to check PNR status and train information. You agree not to use the Service for any unlawful purpose or in any way that could damage, disable, overburden, or impair the Service.</li>
+                    <li><span class="font-bold text-rail-green">Accuracy of Information:</span> While we strive to provide accurate and up-to-date information, RailTracker does not guarantee the accuracy, completeness, or reliability of any information obtained through the Service. Train schedules, PNR statuses, and other data are subject to change by Indian Railways.</li>
+                </ul>
+
+                <h3 class="text-3xl font-black text-slate-800 pt-4">2. Intellectual Property</h3>
+                <p>
+                    The Service and its original content, features, and functionality are and will remain the exclusive property of RailTracker and its licensors. The Service is protected by copyright, trademark, and other laws of both India and foreign countries. Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of RailTracker.
+                </p>
+
+                <h3 class="text-3xl font-black text-slate-800 pt-4">3. Links to Other Websites</h3>
+                <p>
+                    Our Service may contain links to third-party websites or services that are not owned or controlled by RailTracker. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party websites or services. You further acknowledge and agree that RailTracker shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such websites or services.
+                </p>
+
+                <h3 class="text-3xl font-black text-slate-800 pt-4">4. Disclaimer of Warranties</h3>
+                <p>
+                    Your use of the Service is at your sole risk. The Service is provided on an "AS IS" and "AS AVAILABLE" basis. The Service is provided without warranties of any kind, whether express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or course of performance.
+                </p>
+
+                <h3 class="text-3xl font-black text-slate-800 pt-4">5. Limitation of Liability</h3>
+                <p>
+                    In no event shall RailTracker, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Service; (ii) any conduct or content of any third party on the Service; (iii) any content obtained from the Service; and (iv) unauthorized access, use or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence) or any other legal theory, whether or not we have been informed of the possibility of such damage, and even if a remedy set forth herein is found to have failed of its essential purpose.
+                </p>
+
+                <h3 class="text-3xl font-black text-slate-800 pt-4">6. Governing Law</h3>
+                <p>
+                    These Terms shall be governed and construed in accordance with the laws of India, without regard to its conflict of law provisions.
+                </p>
+
+                <h3 class="text-3xl font-black text-slate-800 pt-4">7. Changes to Terms</h3>
+                <p>
+                    We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
+                </p>
+
+                <h3 class="text-3xl font-black text-slate-800 pt-4">8. Contact Us</h3>
+                <p>
+                    If you have any questions about these Terms, please contact us:
+                </p>
+                <ul class="list-disc list-inside space-y-3 pl-4">
+                    <li>By email: support@railtracker.in</li>
+                    <li>By visiting this page on our website: <a href="contact.html" class="text-blue-600 hover:underline font-bold">Contact Us</a></li>
+                </ul>
+
+                <p class="text-sm text-slate-500 mt-12">
+                    Last updated: July 14, 2025
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-black/30"></div>
+    <div class="container mx-auto px-4 py-20 relative z-10">
+        <div class="grid md:grid-cols-4 gap-12 mb-16">
+            <div>
+                <div class="flex items-center space-x-4 mb-8">
+                    <div class="w-16 h-16 hero-gradient rounded-2xl flex items-center justify-center shadow-2xl">
+                        <i class="fas fa-train text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-black">RailTracker</h3>
+                        <p class="text-slate-300 text-sm font-semibold">Live Railway Tracking</p>
+                    </div>
+                </div>
+                <p class="text-slate-300 leading-relaxed mb-8 font-medium">
+                    India's most trusted and comprehensive railway journey tracking platform with real-time updates and intelligent insights.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-white/20 transition-colors shadow-xl">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-xl font-black mb-8 flex items-center">
+                    <i class="fas fa-link mr-3 text-blue-400"></i>Quick Links
+                </h3>
+                <ul class="space-y-4 text-slate-300">
+                    <li><a href="index.html#home" class="hover:text-white transition-colors flex items-center group font-medium">
+                        <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>PNR Status
+                    </a></li>
+                    <li><a href="about.html" class="hover:text-white transition-colors flex items-center group font-medium">
+                        <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>About Us
+                    </a></li>
+                    <li><a href="contact.html" class="hover:text-white transition-colors flex items-center group font-medium">
+                        <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Contact Us
+                    </a></li>
+                    <li><a href="privacy-policy.html" class="hover:text-white transition-colors flex items-center group font-medium">
+                        <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Privacy Policy
+                    </a></li>
+                    <li><a href="terms-of-service.html" class="hover:text-white transition-colors flex items-center group font-medium">
+                        <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Terms of Service
+                    </a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="text-xl font-black mb-8 flex items-center">
+                    <i class="fas fa-headset mr-3 text-green-400"></i>Support
+                </h3>
+                <ul class="space-y-4 text-slate-300">
+                    <li><a href="#" class="hover:text-white transition-colors flex items-center group font-medium">
+                        <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Help Center
+                    </a></li>
+                    <li><a href="contact.html" class="hover:text-white transition-colors flex items-center group font-medium">
+                        <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Contact Us
+                    </a></li>
+                    <li><a href="privacy-policy.html" class="hover:text-white transition-colors flex items-center group font-medium">
+                        <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Privacy Policy
+                    </a></li>
+                    <li><a href="terms-of-service.html" class="hover:text-white transition-colors flex items-center group font-medium">
+                        <i class="fas fa-chevron-right mr-3 text-xs group-hover:translate-x-1 transition-transform"></i>Terms of Service
+                    </a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="text-xl font-black mb-8 flex items-center">
+                    <i class="fas fa-phone mr-3 text-yellow-400"></i>Contact Info
+                </h3>
+                <ul class="space-y-6 text-slate-300">
+                    <li class="flex items-center">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
+                            <i class="fas fa-phone text-blue-400 text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Railway Enquiry</p>
+                            <p class="font-bold text-lg">139</p>
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <div class="w-10 h-10 bg-green-500/20 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
+                            <i class="fas fa-envelope text-green-400 text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Email Support</p>
+                            <p class="font-bold text-lg">support@railtracker.in</p>
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <div class="w-10 h-10 bg-purple-500/20 rounded-2xl flex items-center justify-center mr-4 shadow-xl">
+                            <i class="fas fa-globe text-purple-400 text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Official Website</p>
+                            <p class="font-bold text-lg">indianrailways.gov.in</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="border-t border-white/10 pt-12">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-slate-400 mb-6 md:mb-0 flex items-center font-medium">
+                    <i class="fas fa-copyright mr-3"></i>
+                    2024 RailTracker. All rights reserved.
+                </p>
+                <div class="flex items-center space-x-8 text-sm text-slate-400">
+                    <span class="flex items-center glass-dark px-4 py-2 rounded-full">
+                        <i class="fas fa-shield-check text-green-400 mr-2"></i>
+                        SSL Secured
+                    </span>
+                    <span class="flex items-center glass-dark px-4 py-2 rounded-full">
+                        <i class="fas fa-clock text-blue-400 mr-2"></i>
+                        99.9% Uptime
+                    </span>
+                    <span class="flex items-center glass-dark px-4 py-2 rounded-full">
+                        <i class="fas fa-users text-purple-400 mr-2"></i>
+                        50M+ Users
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile menu toggle
+    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+        document.getElementById('mobileMenu').classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on links
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+        link.addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.remove('active');
+        });
+    });
+</script>
+</body>
+</html>
