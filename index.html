@@ -523,6 +523,15 @@
               ></i
               >Support
             </a>
+            <a
+              href="#"
+              class="nav-link text-slate-700 hover:text-rail-blue font-semibold text-lg flex items-center group"
+            >
+              <i
+                class="fas fa-blog mr-2 group-hover:scale-110 transition-transform"
+              ></i
+              >Blog
+            </a>
           </nav>
 
           <!-- Premium CTA -->
@@ -2225,19 +2234,7 @@
       }
 
       // Helper function to get station name with enhanced mapping
-      function getStationName(stationCode) {
-        const stationNames = {
-          HW: "Haridwar Junction (HW)",
-          GKP: "Gorakhpur Junction (GKP)",
-          NDLS: "New Delhi (NDLS)",
-          BCT: "Mumbai Central (BCT)",
-          RK: "Roorkee (RK)",
-          MOZ: "Muzaffarnagar (MOZ)",
-          KOTA: "Kota Junction (KOTA)",
-          BRC: "Vadodara Junction (BRC)",
-        };
-        return stationNames[stationCode] || stationCode;
-      }
+
 
       // Helper function to format date and time
       function formatDateTime(dateString) {
@@ -2471,5 +2468,6 @@
         );
       });
     </script>
+         <script src="./station_code.js"></script>
   </body>
 </html>
