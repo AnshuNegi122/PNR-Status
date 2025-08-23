@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delhi to Bangalore Bus Journey - PNR Guru Blog</title>
+    <meta
+      name="description"
+      content="Embark on an epic road trip from the heart of India to its Silicon Valley. Our guide covers the best routes, travel tips, and must-see spots for your Delhi to Bangalore bus journey."
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon Icon  -->
+    <link rel="icon" href="images/favicon.webp" type="image/png" />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom Tailwind Config & Styles -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              "rail-blue": "#0f172a",
+              "rail-orange": "#ea580c",
+              "rail-green": "#16a34a",
+              "rail-red": "#dc2626",
+              "rail-purple": "#7c3aed",
+              "rail-gold": "#f59e0b",
+              "track-gray": "#64748b",
+            },
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out forwards",
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "fade-in": "fadeIn 1s ease-out",
+              "slide-up": "slideUp 0.8s ease-out",
+              "slide-in-left": "slideInLeft 1s ease-out",
+              "slide-in-right": "slideInRight 1s ease-out",
+              "bounce-gentle": "bounceGentle 3s ease-in-out infinite",
+              "train-move": "trainMove 4s ease-in-out infinite",
+              "gradient-shift": "gradientShift 8s ease infinite",
+              shimmer: "shimmer 2s linear infinite",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              float: {
+                "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+                "33%": { transform: "translateY(-10px) rotate(1deg)" },
+                "66%": { transform: "translateY(-5px) rotate(-1deg)" },
+              },
+              fadeIn: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideUp: {
+                "0%": { opacity: "0", transform: "translateY(40px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideInLeft: {
+                "0%": { opacity: "0", transform: "translateX(-60px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+              slideInRight: {
+                "0%": { opacity: "0", transform: "translateX(60px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+              bounceGentle: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-8px)" },
+              },
+              trainMove: {
+                "0%": { transform: "translateX(-20px)" },
+                "50%": { transform: "translateX(20px)" },
+                "100%": { transform: "translateX(-20px)" },
+              },
+              gradientShift: {
+                "0%": { backgroundPosition: "0% 50%" },
+                "50%": { backgroundPosition: "100% 50%" },
+                "100%": { backgroundPosition: "0% 50%" },
+              },
+              shimmer: {
+                "0%": { transform: "translateX(-100%)" },
+                "100%": { transform: "translateX(100%)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .dark-mode {
+        --bg-color: #0f172a;
+        --text-color: #e2e8f0;
+        --card-bg: rgba(30, 41, 59, 0.8);
+        --border-color: rgba(255, 255, 255, 0.1);
+        --header-bg: rgba(15, 23, 42, 0.8);
+        --heading-color: #fff;
+        --paragraph-color: #94a3b8;
+        --prose-link-color: #f8fafc;
+      }
+      body {
+        background-color: var(--bg-color, #f8fafc);
+        color: var(--text-color, #334155);
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .glass-effect {
+        backdrop-filter: blur(20px);
+        background: var(--card-bg, rgba(255, 255, 255, 0.95));
+        border: 1px solid var(--border-color, rgba(255, 255, 255, 0.3));
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+      .nav-link {
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: var(--text-color, #334155);
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: -8px;
+        left: 50%;
+        background: linear-gradient(90deg, #0f172a, #ea580c);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(-50%);
+        border-radius: 2px;
+      }
+      .nav-link:hover {
+        color: #ea580c;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #0f172a, #1e40af, #ea580c, #dc2626);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 8s ease infinite;
+      }
+      .prose h1,
+      .prose h2,
+      .prose h3 {
+        color: var(--heading-color, #1e293b);
+      }
+      .prose p,
+      .prose li,
+      .prose figcaption {
+        color: var(--paragraph-color, #475569);
+      }
+      .prose a {
+        color: var(--prose-link-color, #ea580c);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+      }
+      .prose a:hover {
+        color: var(--prose-link-color, #0f172a);
+      }
+      .prose ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      .prose ul li {
+        position: relative;
+        padding-left: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .prose ul li::before {
+        content: "\f058";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        top: 0.1em;
+        color: #16a34a;
+        font-size: 1.25rem;
+      }
+      .sidebar-widget h3 {
+        color: var(--heading-color, #1e293b);
+      }
+      .sidebar-widget a,
+      .sidebar-widget span {
+        color: var(--paragraph-color, #475569);
+      }
+      
+      .hero-gradient {
+        background: linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #1e293b 25%,
+          #334155 50%,
+          #ea580c 75%,
+          #dc2626 100%
+        );
+        background-size: 400% 400%;
+        animation: gradientShift 12s ease infinite;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen font-display">
+    <!-- Header -->
+    <header
+      class="bg-rail-blue/80 backdrop-blur-sm sticky top-0 z-50 border-b border-white/10"
+    >
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-20">
+          <!-- Premium Logo and Brand -->
+          <div class="flex items-center space-x-2 sm:space-x-4">
+            <div class="relative group">
+              <div
+                class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition-all duration-300 bg-white"
+              >
+                <i
+                  class="fas fa-train text-slate-900 text-xl sm:text-2xl animate-train-move"
+                ></i>
+              </div>
+              <div
+                class="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center live-indicator"
+              >
+                <i class="fas fa-circle text-white text-xs"></i>
+              </div>
+            </div>
+            <div>
+              <h1
+                class="text-2xl sm:text-3xl tracking-tight animate-slide-up"
+              >
+                <a
+                  href="../index.html"
+                  class="text-3xl font-extrabold tracking-tight text-white"
+                >
+                  PNR <span class="text-rail-orange">Guru</span>
+                </a>
+              </h1>
+              <p
+                class="text-xs sm:text-sm text-slate-200 font-semibold flex items-center"
+              >
+                <i class="fas fa-shield-check text-green-500 mr-1 sm:mr-2"></i>
+                Live PNR & Train Status
+              </p>
+            </div>
+          </div>
+
+          <!-- Premium CTA -->
+          <div class="hidden md:flex items-center space-x-4 lg:space-x-6">
+            <div class="text-right">
+              <p class="text-xs text-slate-100 font-medium">Quick Access</p>
+              <p class="text-sm font-bold text-slate-400">Check PNR Status</p>
+            </div>
+            <a
+              href="../../index.html"
+              class="btn-primary text-slate-800 bg-white px-6 py-3 lg:px-8 lg:py-4 rounded-2xl font-bold text-base lg:text-lg shadow-glow hover:bg-slate-400 hover:text-white transition-all duration-300 flex items-center"
+            >
+              <i class="fas fa-search mr-2 lg:mr-3"></i>
+              Check Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="py-16 sm:py-24">
+        <div class="container mx-auto px-4">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <article
+              class="lg:col-span-2 glass-effect rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl prose max-w-none animate-fade-in"
+            >
+              <header
+                class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-8"
+              >
+                <div
+                  class="inline-block bg-rail-purple/20 text-rail-purple text-sm font-bold px-4 py-2 rounded-full mb-4"
+                >
+                  City Guides
+                </div>
+                <h1 class="text-4xl md:text-5xl font-black mb-4 leading-tight">
+                  Delhi to Bangalore Bus Journey
+                </h1>
+                <div class="flex items-center text-sm opacity-80 space-x-4">
+                  <span
+                    ><i class="fas fa-user-edit mr-2"></i>By Wanderlust Wheels
+                    Staff</span
+                  >
+                  <span
+                    ><i class="fas fa-calendar-alt mr-2"></i>August 23,
+                    2025</span
+                  >
+                </div>
+              </header>
+              <figure class="my-8">
+                <img
+                  src="https://images.unsplash.com/photo-1596173836427-3435f635602a?q=80&w=1280&auto=format&fit=crop"
+                  alt="Aerial view of the magnificent Vidhana Soudha in Bangalore at dusk."
+                  class="rounded-2xl shadow-xl w-full"
+                />
+                <figcaption class="text-center mt-3 text-sm italic">
+                  The majestic Vidhana Soudha, a landmark of Bangalore.
+                </figcaption>
+              </figure>
+              <div class="post-content text-lg leading-relaxed space-y-6">
+                <h2 class="text-3xl font-black mt-12 mb-4">
+                  The Great Southern Odyssey
+                </h2>
+                <p>
+                  A bus journey from Delhi to Bangalore is not for the faint of
+                  heart, but it's an epic adventure that crosses the diverse
+                  heartland of India. This marathon trip, spanning over 2,000
+                  kilometers, offers a unique perspective on the country's
+                  changing landscapes, from the northern plains to the Deccan
+                  Plateau. It's a journey for the true road-tripper, offering a
+                  tapestry of cultures, cuisines, and geographies.
+                </p>
+
+                <h2 class="text-3xl font-black mt-12 mb-4">
+                  Preparing for the Long Haul
+                </h2>
+                <p>
+                  <strong
+                    >Q: How long is the bus journey from Delhi to
+                    Bangalore?</strong
+                  ><br />A: This is one of the longest bus routes in India,
+                  typically taking anywhere from 36 to 48 hours, including
+                  layovers and rest stops. It's essential to book a comfortable
+                  sleeper or semi-sleeper bus for this trip.
+                </p>
+                <p>
+                  <strong>Q: What should I pack?</strong><br />A: Pack light but
+                  smart. Essentials include a neck pillow, a light blanket,
+                  headphones, a power bank, snacks, and a water bottle. Wet
+                  wipes and hand sanitizer are also highly recommended.
+                </p>
+
+                <figure class="my-8">
+                  <img
+                    src="https://images.unsplash.com/photo-1601752802386-ba51415b0205?q=80&w=1280&auto=format&fit=crop"
+                    alt="Lush greenery of Cubbon Park in the heart of Bangalore city."
+                    class="rounded-2xl shadow-xl w-full max-w-2xl mx-auto"
+                  />
+                  <figcaption class="text-center mt-3 text-sm italic">
+                    Find an oasis of calm at Cubbon Park upon your arrival.
+                  </figcaption>
+                </figure>
+
+                <h2 class="text-3xl font-black mt-12 mb-4">
+                  Welcome to the Garden City
+                </h2>
+                <p>
+                  Upon arriving in Bangalore, the "Silicon Valley of India,"
+                  you'll be greeted by pleasant weather and a vibrant,
+                  cosmopolitan atmosphere. The city is a blend of modern tech
+                  parks and lush green spaces.
+                </p>
+                <ul>
+                  <li>
+                    <strong>Lalbagh Botanical Garden:</strong> Home to a
+                    stunning variety of flora and a famous glass house.
+                  </li>
+                  <li>
+                    <strong>Bangalore Palace:</strong> Explore the opulent
+                    Tudor-style architecture and learn about the city's royal
+                    history.
+                  </li>
+                  <li>
+                    <strong>Commercial Street:</strong> A bustling hub for
+                    shopping, from street-side stalls to branded showrooms.
+                  </li>
+                  <li>
+                    <strong>Innovative Film City:</strong> A fun-filled
+                    destination with theme parks, museums, and entertainment
+                    options.
+                  </li>
+                </ul>
+              </div>
+            </article>
+            <aside class="space-y-10">
+              <div
+                class="sidebar-widget glass-effect p-6 rounded-2xl shadow-xl"
+              >
+                <h3
+                  class="widget-title text-xl font-black pb-3 border-b-2 border-slate-200 dark:border-slate-700 mb-4"
+                >
+                  Recent Posts
+                </h3>
+                <ul class="space-y-4">
+                  <li>
+                    <a
+                      href="#"
+                      class="font-bold hover:text-rail-orange transition-colors"
+                      >Delhi to Manali: A Himalayan Adventure</a
+                    ><span class="block text-xs mt-1 opacity-70"
+                      >August 21, 2025</span
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="font-bold hover:text-rail-orange transition-colors"
+                      >Coastal Charms: The Road to Goa</a
+                    ><span class="block text-xs mt-1 opacity-70"
+                      >August 18, 2025</span
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="font-bold hover:text-rail-orange transition-colors"
+                      >Into the Parvati Valley: A Kasol Diary</a
+                    ><span class="block text-xs mt-1 opacity-70"
+                      >August 15, 2025</span
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="sidebar-widget glass-effect p-6 rounded-2xl shadow-xl"
+              >
+                <h3
+                  class="widget-title text-xl font-black pb-3 border-b-2 border-slate-200 dark:border-slate-700 mb-4"
+                >
+                  Categories
+                </h3>
+                <ul class="space-y-3">
+                  <li>
+                    <a
+                      href="#"
+                      class="flex items-center hover:text-rail-orange transition-colors font-semibold"
+                      ><i class="fas fa-bus-alt mr-3 text-rail-blue"></i>Bus
+                      Journeys</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="flex items-center hover:text-rail-orange transition-colors font-semibold"
+                      ><i class="fas fa-map-marked-alt mr-3 text-rail-red"></i
+                      >Destinations</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="flex items-center hover:text-rail-orange transition-colors font-semibold"
+                      ><i class="fas fa-lightbulb mr-3 text-rail-green"></i
+                      >Travel Tips</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="mt-20 py-10 bg-rail-blue/50 border-t border-white/10">
+      <div
+        class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400"
+      >
+        <p>&copy; 2025 PNR Guru. All Rights Reserved.</p>
+      </div>
+    </footer>
+    <script>
+      const themeToggle = document.getElementById("theme-toggle");
+      const body = document.body;
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        body.classList.add(savedTheme);
+      }
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "theme",
+          body.classList.contains("dark-mode") ? "dark-mode" : ""
+        );
+      });
+    </script>
+  </body>
+</html>

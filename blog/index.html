@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PNR Guru Blog - A Travel Blog</title>
+    <meta
+      name="description"
+      content="A travel blog focusing on bus journeys and discovering incredible destinations."
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon Icon  -->
+    <link rel="icon" href="images/favicon.webp" type="image/png" />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Tailwind Config & Styles -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              "rail-blue": "#0f172a",
+              "rail-orange": "#ea580c",
+              "rail-green": "#16a34a",
+              "rail-red": "#dc2626",
+              "rail-purple": "#7c3aed",
+              "rail-gold": "#f59e0b",
+              "track-gray": "#64748b",
+            },
+            animation: {
+              "fade-in-up": "fadeInUp 0.8s ease-out forwards",
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "fade-in": "fadeIn 1s ease-out",
+              "slide-up": "slideUp 0.8s ease-out",
+              "slide-in-left": "slideInLeft 1s ease-out",
+              "slide-in-right": "slideInRight 1s ease-out",
+              "bounce-gentle": "bounceGentle 3s ease-in-out infinite",
+              "train-move": "trainMove 4s ease-in-out infinite",
+              "gradient-shift": "gradientShift 8s ease infinite",
+              shimmer: "shimmer 2s linear infinite",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              float: {
+                "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+                "33%": { transform: "translateY(-10px) rotate(1deg)" },
+                "66%": { transform: "translateY(-5px) rotate(-1deg)" },
+              },
+              fadeIn: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideUp: {
+                "0%": { opacity: "0", transform: "translateY(40px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideInLeft: {
+                "0%": { opacity: "0", transform: "translateX(-60px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+              slideInRight: {
+                "0%": { opacity: "0", transform: "translateX(60px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+              bounceGentle: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-8px)" },
+              },
+              trainMove: {
+                "0%": { transform: "translateX(-20px)" },
+                "50%": { transform: "translateX(20px)" },
+                "100%": { transform: "translateX(-20px)" },
+              },
+              gradientShift: {
+                "0%": { backgroundPosition: "0% 50%" },
+                "50%": { backgroundPosition: "100% 50%" },
+                "100%": { backgroundPosition: "0% 50%" },
+              },
+              shimmer: {
+                "0%": { transform: "translateX(-100%)" },
+                "100%": { transform: "translateX(100%)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-image: linear-gradient(
+            to bottom,
+            rgba(15, 23, 42, 0.8),
+            rgba(8, 13, 25, 0.9)
+          ),
+          url("https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?q=80&w=1920&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+      .glass-card {
+        background-color: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .animate-delay-1 {
+        animation-delay: 0.2s;
+      }
+      .animate-delay-2 {
+        animation-delay: 0.4s;
+      }
+      .animate-delay-3 {
+        animation-delay: 0.6s;
+      }
+      .animate-delay-4 {
+        animation-delay: 0.8s;
+      }
+      .animate-delay-5 {
+        animation-delay: 1s;
+      }
+      .animate-delay-6 {
+        animation-delay: 1.2s;
+      }
+    </style>
+  </head>
+  <body class="bg-rail-dark text-gray-200 font-sans antialiased">
+    <!-- Header -->
+    <header
+      class="bg-rail-blue/80 backdrop-blur-sm sticky top-0 z-50 border-b border-white/10"
+    >
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-20">
+          <!-- Premium Logo and Brand -->
+          <div class="flex items-center space-x-2 sm:space-x-4">
+            <div class="relative group">
+              <div
+                class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition-all duration-300 bg-white"
+              >
+                <i
+                  class="fas fa-train text-slate-900 text-xl sm:text-2xl animate-train-move"
+                ></i>
+              </div>
+              <div
+                class="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center live-indicator"
+              >
+                <i class="fas fa-circle text-white text-xs"></i>
+              </div>
+            </div>
+            <div>
+              <h1
+                class="text-2xl sm:text-3xl font-black gradient-text tracking-tight animate-slide-up"
+              >
+                <a
+                  href="./index.html"
+                  class="text-3xl font-extrabold tracking-tight text-white"
+                >
+                  PNR <span class="text-rail-orange">Guru</span>
+                </a>
+              </h1>
+              <p
+                class="text-xs sm:text-sm text-slate-200 font-semibold flex items-center"
+              >
+                <i class="fas fa-shield-check text-green-500 mr-1 sm:mr-2"></i>
+                Live PNR & Train Status
+              </p>
+            </div>
+          </div>
+
+          <!-- Premium CTA -->
+          <div class="hidden md:flex items-center space-x-4 lg:space-x-6">
+            <div class="text-right">
+              <p class="text-xs text-slate-100 font-medium">Quick Access</p>
+              <p class="text-sm font-bold text-slate-400">Check PNR Status</p>
+            </div>
+            <a
+              href="../index.html"
+              class="btn-primary text-slate-800 bg-white px-6 py-3 lg:px-8 lg:py-4 rounded-2xl font-bold text-base lg:text-lg shadow-glow hover:bg-slate-400 hover:text-white transition-all duration-300 flex items-center"
+            >
+              <i class="fas fa-search mr-2 lg:mr-3"></i>
+              Check Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Hero Section -->
+      <section class="text-center my-12 animate-fade-in-up">
+        <h1
+          class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4"
+        >
+          The Scenic Route, Reimagined.
+        </h1>
+        <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300">
+          Discovering hidden gems and breathtaking views from the window of a
+          humble bus. Your next adventure starts here.
+        </p>
+      </section>
+
+      <!-- Main Articles Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div
+          class="glass-card rounded-2xl overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 animate-fade-in-up animate-delay-1 opacity-0"
+        >
+          <a href="./articles/delhi-to-manali-bus-journey.html">
+            <img
+              src="https://cdn.getyourguide.com/image/format=auto,fit=contain,gravity=auto,quality=60,width=1440,height=650,dpr=1/tour_img/6481b3d94fc03.jpeg"
+              alt="Hadimba Devi Temple in Manali"
+              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="p-6">
+              <span class="text-sm font-bold text-rail-orange uppercase"
+                >Bus Journeys</span
+              >
+              <h3 class="text-xl font-bold mt-2 mb-3 text-white">
+                Delhi to Manali: A Himalayan Adventure by Bus
+              </h3>
+              <p class="text-gray-400 text-sm">
+                Winding roads, stunning valleys, and everything you need to know
+                for this iconic bus trip.
+              </p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div
+          class="glass-card rounded-2xl overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 animate-fade-in-up animate-delay-2 opacity-0"
+        >
+          <a href="./articles/delhi-to-lucknow-bus-journey.html">
+            <img
+              src="https://images.unsplash.com/photo-1628477160043-3f6b3ad54f61?q=80&w=1440,height=650&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt="Historic building in Lucknow"
+              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="p-6">
+              <span class="text-sm font-bold text-rail-orange uppercase"
+                >With Loved Ones</span
+              >
+              <h3 class="text-xl font-bold mt-2 mb-3 text-white">
+                Delhi to Lucknow: A Weekend of History and Food
+              </h3>
+              <p class="text-gray-400 text-sm">
+                Explore the city of Nawabs with your family. A guide to the best
+                sights and culinary delights.
+              </p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div
+          class="glass-card rounded-2xl overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 animate-fade-in-up animate-delay-3 opacity-0"
+        >
+          <a href="./articles/delhi-to-rajasthan-bus-journey.html">
+            <img
+              src="https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?q=80&w=1170&auto=format&fit=crop"
+              alt="Pink building in Jaipur"
+              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="p-6">
+              <span class="text-sm font-bold text-rail-orange uppercase"
+                >Destinations</span
+              >
+              <h3 class="text-xl font-bold mt-2 mb-3 text-white">
+                Bus Hopping in Rajasthan: Jaipur to Jodhpur
+              </h3>
+              <p class="text-gray-400 text-sm">
+                Discover the magic of the desert state by hopping between its
+                most vibrant cities on a budget.
+              </p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div
+          class="glass-card rounded-2xl overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 animate-fade-in-up animate-delay-4 opacity-0"
+        >
+          <a href="./articles/delhi-to-goa-bus-journey.html">
+            <img
+              src="https://images.unsplash.com/photo-1614082242765-7c98ca0f3df3?q=80&w=1170&auto=format&fit=crop"
+              alt="Goa beach"
+              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="p-6">
+              <span class="text-sm font-bold text-rail-orange uppercase"
+                >Destinations</span
+              >
+              <h3 class="text-xl font-bold mt-2 mb-3 text-white">
+                A Budget Guide to Goa's Best Beaches
+              </h3>
+              <p class="text-gray-400 text-sm">
+                Sun, sand, and sea without breaking the bank. Here's how to
+                enjoy Goa on a shoestring.
+              </p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 5 -->
+        <div
+          class="glass-card rounded-2xl overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 animate-fade-in-up animate-delay-5 opacity-0"
+        >
+          <a href="./articles/delhi-to-munnar-bus-journey.html">
+            <img
+              src="https://images.unsplash.com/photo-1624720969464-5a4a4a747ca3?q=80&w=1074&auto=format&fit=crop"
+              alt="Tea plantations in Munnar"
+              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="p-6">
+              <span class="text-sm font-bold text-rail-orange uppercase"
+                >Travel Tips</span
+              >
+              <h3 class="text-xl font-bold mt-2 mb-3 text-white">
+                Bus Trip to Munnar: Navigating the Hills
+              </h3>
+              <p class="text-gray-400 text-sm">
+                Essential tips for a safe and scenic bus journey through the
+                winding roads of Kerala's tea country.
+              </p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 6 -->
+        <div
+          class="glass-card rounded-2xl overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 animate-fade-in-up animate-delay-6 opacity-0"
+        >
+          <a href="./articles/delhi-to-banglore-bus-journey.html">
+            <img
+              src="https://imgs.search.brave.com/ehD1IsBvs4mDiaHA5NKepTdUf8M-fxPcb3gepLuijy8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTMz/MzIwMzA5NC9waG90/by9hbi1hZXJpYWwt/dmlldy1vZi12aWRo/YW4tc291ZGhhLWFu/ZC1oaWdoLWNvdXJ0/LWJ1aWxkaW5nLWlu/LWJhbmdhbG9yZS5q/cGc_cz02MTJ4NjEy/Jnc9MCZrPTIwJmM9/NzNfRUo5b1R6UV82/bkZNN2dDa2Jqb1E3/bXdONEpHM0M3X1Z4/X25QRFU1WT0"
+              alt="Bangalore cityscape"
+              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="p-6">
+              <span class="text-sm font-bold text-rail-orange uppercase"
+                >City Guides</span
+              >
+              <h3 class="text-xl font-bold mt-2 mb-3 text-white">
+                Exploring Bangalore by Public Transport
+              </h3>
+              <p class="text-gray-400 text-sm">
+                How to use the city's bus network to explore everything from
+                tech parks to botanical gardens.
+              </p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 7: Delhi to Kasol (NEW) -->
+        <div
+          class="glass-card rounded-2xl overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 animate-fade-in-up animate-delay-6 opacity-0"
+        >
+          <a href="./articles/delhi-to-kasol-bus-journey.html">
+            <img
+              src="https://images.unsplash.com/photo-1581791534721-e599df4417f7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8a2Fzb2x8ZW58MHx8MHx8fDA%3D"
+              alt="Parvati Valley near Kasol"
+              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="p-6">
+              <span class="text-sm font-bold text-rail-green uppercase"
+                >Himalayan Journeys</span
+              >
+              <h3 class="text-xl font-bold mt-2 mb-3 text-white">
+                Delhi to Kasol: Train to the Parvati Valley
+              </h3>
+              <p class="text-gray-400 text-sm">
+                Your guide to reaching the backpacker's paradise of Kasol,
+                starting with a scenic train ride to the mountains.
+              </p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 8: Delhi to Rajasthan (NEW) -->
+        <div
+          class="glass-card rounded-2xl overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 animate-fade-in-up animate-delay-7 opacity-0"
+        >
+          <a href="./articles/delhi-to-rajasthan-bus-journey.html">
+            <img
+              src="https://images.unsplash.com/photo-1477587458883-47145ed94245?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cmFqYXN0aGFufGVufDB8fDB8fHww"
+              alt="Hawa Mahal in Jaipur, Rajasthan"
+              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="p-6">
+              <span class="text-sm font-bold text-rail-orange uppercase"
+                >Royal Escapes</span
+              >
+              <h3 class="text-xl font-bold mt-2 mb-3 text-white">
+                Delhi to Rajasthan: A Royal Rail Journey
+              </h3>
+              <p class="text-gray-400 text-sm">
+                Explore the land of kings, majestic forts, and vibrant culture
+                on this unforgettable journey by train.
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 py-10 bg-rail-blue/50 border-t border-white/10">
+      <div
+        class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400"
+      >
+        <p>&copy; 2025 PNR Guru. All Rights Reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
